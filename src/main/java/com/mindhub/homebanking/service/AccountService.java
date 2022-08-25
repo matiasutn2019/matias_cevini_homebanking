@@ -37,7 +37,7 @@ public class AccountService implements IAccountService {
     @Override
     public void createAccount(Authentication authentication) throws Exception {
         Client client = clientRepository.findByEmail(authentication.getName()).get();
-        if (client.getAccounts().size() >= 3) {
+        if (client.getAccounts().stream().count() >= 3) {
             throw new Exception("You have reached the account limit");
         }
         Account account = new Account(createNumber(), LocalDateTime.now(), 0.0);
