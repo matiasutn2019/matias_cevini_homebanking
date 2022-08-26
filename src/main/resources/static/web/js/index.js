@@ -30,15 +30,19 @@ createApp({
             }
         },
         register() {
-            axios
-                .post('/api/clients', "firstName=" + this.firstName + "&lastName="
-                    + this.lastName + "&email=" + this.email + "&password=" + this.password,
-                    { headers: { 'content-type': 'application/x-www-form-urlencoded' } })
-                .then(response => {
-                    this.emailLogin = this.email;
-                    this.passwordLogin = this.password;
-                    this.login()
-                })
+            if (this.firstName == '' || this.lastName == '' || this.email == '' || this.password == '') {
+                alert('Ingrese los valores correspondientes');
+            } else {
+                axios
+                    .post('/api/clients', "firstName=" + this.firstName + "&lastName="
+                        + this.lastName + "&email=" + this.email + "&password=" + this.password,
+                        { headers: { 'content-type': 'application/x-www-form-urlencoded' } })
+                    .then(response => {
+                        this.emailLogin = this.email;
+                        this.passwordLogin = this.password;
+                        this.login()
+                    })
+            }
         }
     }
 }).mount('#app')
