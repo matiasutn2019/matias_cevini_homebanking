@@ -27,18 +27,6 @@ createApp({
           this.response = res
           this.clients = this.response.data
         })
-        .catch(error => {
-          if (error.response) {
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            console.log(error.request);
-          } else {
-            console.log('Error', error.message);
-          }
-          console.log(error.config);
-        })
     },
 
     addClient() {
@@ -52,18 +40,6 @@ createApp({
             email: this.email
           })
           .then(this.loadData())
-          .catch(error => {
-            if (error.response) {
-              console.log(error.response.data);
-              console.log(error.response.status);
-              console.log(error.response.headers);
-            } else if (error.request) {
-              console.log(error.request);
-            } else {
-              console.log('Error', error.message);
-            }
-            console.log(error.config);
-          })
       }
     },
 
@@ -71,18 +47,6 @@ createApp({
       axios
         .delete('/api/clients/' + id)
         .then(this.loadData())
-        .catch(error => {
-          if (error.response) {
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            console.log(error.request);
-          } else {
-            console.log('Error', error.message);
-          }
-          console.log(error.config);
-        })
     },
 
     patch() {
@@ -93,18 +57,6 @@ createApp({
           email: this.emailModal
         })
         .then(this.loadData())
-        .catch(error => {
-          if (error.response) {
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            console.log(error.request);
-          } else {
-            console.log('Error', error.message);
-          }
-          console.log(error.config);
-        })
     },
 
     put() {
@@ -115,18 +67,6 @@ createApp({
           email: this.emailModal
         })
         .then(this.loadData())
-        .catch(error => {
-          if (error.response) {
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            console.log(error.request);
-          } else {
-            console.log('Error', error.message);
-          }
-          console.log(error.config);
-        })
     },
 
     loadClientModal(client) {
@@ -143,22 +83,9 @@ createApp({
     signout() {
       axios
         .post('/api/logout')
-        .then(response => {
-          console.log('signed out!!!')
+        .then(response =>
           window.location.href = "/web/index.html"
-        })
-        .catch(error => {
-          if (error.response) {
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            console.log(error.request);
-          } else {
-            console.log('Error', error.message);
-          }
-          console.log(error.config);
-        })
+        )
     }
   }
 }).mount('#app')

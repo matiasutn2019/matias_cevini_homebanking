@@ -24,46 +24,19 @@ createApp({
         signout() {
             axios
                 .post('/api/logout')
-                .then(response => {
-                    console.log('signed out!!!')
+                .then(response =>
                     window.location.href = "/web/index.html"
-                })
-                .catch(error => {
-                    if (error.response) {
-                        console.log(error.response.data);
-                        console.log(error.response.status);
-                        console.log(error.response.headers);
-                    } else if (error.request) {
-                        console.log(error.request);
-                    } else {
-                        console.log('Error', error.message);
-                    }
-                    console.log(error.config);
-                })
+                )
         },
 
         loadData() {
             axios
                 .get('/api/clients/current')
                 .then(res => {
-                    this.response = res
-                    this.client = this.response.data
-                    this.accounts = this.client.accountsDTO
-                    console.log(this.accounts)
+                    this.response = res;
+                    this.client = this.response.data;
+                    this.accounts = this.client.accountsDTO;
                 })
-                .catch(error => {
-                    if (error.response) {
-                        console.log(error.response.data);
-                        console.log(error.response.status);
-                        console.log(error.response.headers);
-                    } else if (error.request) {
-                        console.log(error.request);
-                    } else {
-                        console.log('Error', error.message);
-                    }
-                    console.log(error.config);
-                })
-
         },
 
         doTransaction() {
@@ -82,19 +55,6 @@ createApp({
                             alert('Successfully!!!')
                             window.location.reload()
                         }
-                    })
-                    .catch(error => {
-                        if (error.response) {
-                            console.log(error.response.data);
-                            console.log(error.response.status);
-                            console.log(error.response.headers);
-                            alert(error.response.data)
-                        } else if (error.request) {
-                            console.log(error.request);
-                        } else {
-                            console.log('Error', error.message);
-                        }
-                        console.log(error.config);
                     })
             } else {
                 window.location.href = "/web/accounts.html"
@@ -120,7 +80,5 @@ createApp({
                 this.amount = 0;
             }
         },
-
     }
-
 }).mount('#app')

@@ -25,64 +25,25 @@ createApp({
         signout() {
             axios
                 .post('/api/logout')
-                .then(response => {
-                    console.log('signed out!!!')
+                .then(response =>
                     window.location.href = "/web/index.html"
-                })
-                .catch(error => {
-                    if (error.response) {
-                        console.log(error.response.data);
-                        console.log(error.response.status);
-                        console.log(error.response.headers);
-                    } else if (error.request) {
-                        console.log(error.request);
-                    } else {
-                        console.log('Error', error.message);
-                    }
-                    console.log(error.config);
-                })
+                )
         },
 
         getAccounts() {
             axios
                 .get('/api/clients/current/accounts')
-                .then(res => {
+                .then(res =>
                     this.accounts = res.data
-                    console.log(this.accounts)
-                })
-                .catch(error => {
-                    if (error.response) {
-                        console.log(error.response.data);
-                        console.log(error.response.status);
-                        console.log(error.response.headers);
-                    } else if (error.request) {
-                        console.log(error.request);
-                    } else {
-                        console.log('Error', error.message);
-                    }
-                    console.log(error.config);
-                })
+                )
         },
 
         getLoans() {
             axios
                 .get('/api/loans')
-                .then(res => {
+                .then(res =>
                     this.loans = res.data
-                    console.log(this.loans)
-                })
-                .catch(error => {
-                    if (error.response) {
-                        console.log(error.response.data);
-                        console.log(error.response.status);
-                        console.log(error.response.headers);
-                    } else if (error.request) {
-                        console.log(error.request);
-                    } else {
-                        console.log('Error', error.message);
-                    }
-                    console.log(error.config);
-                })
+                )
         },
 
         apply() {
@@ -105,23 +66,9 @@ createApp({
                     )
                     .then(res => {
                         if (res.status === 201) {
-                            alert('Successfully!!!')
-                            window.location.reload()
-                        } else if (res.status === 403) {
-                            console.log(res.data)
+                            alert('Successfully!!!');
+                            window.location.reload();
                         }
-                    })
-                    .catch(error => {
-                        if (error.response) {
-                            console.log(error.response.data);
-                            console.log(error.response.status);
-                            console.log(error.response.headers);
-                        } else if (error.request) {
-                            console.log(error.request);
-                        } else {
-                            console.log('Error', error.message);
-                        }
-                        console.log(error.config);
                     })
             }
         }
