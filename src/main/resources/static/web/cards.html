@@ -53,75 +53,86 @@
         <h2>Client: {{client.firstName + ' ' + client.lastName}}</h2>
 
         <h3 class="text-center mt-4">Credit Cards</h3>
-        <div v-if="creditCards != null" class="d-flex flex-wrap gap-3 mt-4 justify-content-around">
-            <div class="card bg-transparent" v-for="card in creditCards">
-                <div class="card__inner">
-                    <div class="card__front">
-                        <img class="card__front-square card__square" src="./assets/credit-card-chip-gold.png">
-                        <img class="card__front-logo card__logo" src="./assets/logo_visa.jpg">
-                        <p class="card_numer">{{card.number}}</p>
-                        <div class="card__space-75">
-                            <span class="card__label">Card holder</span>
-                            <p class="card__info">{{card.cardHolder}}</p>
-                        </div>
-                        <div class="card__space-25">
-                            <span class="card__label">Expires</span>
-                            <p class="card__info">{{card.thruDate}}</p>
-                        </div>
-                    </div>
-
-                    <div class="card__back">
-                        <div class="card__black-line"></div>
-                        <div class="card__back-content">
-                            <div class="card__secret">
-                                <p class="card__secret--last">{{card.cvv}}</p>
+        <template v-if="creditCards.length > 0">
+            <div class="d-flex flex-wrap gap-3 mt-4 justify-content-around">
+                <div class="card bg-transparent" v-for="card in creditCards">
+                    <div class="card__inner">
+                        <div class="card__front">
+                            <img class="card__front-square card__square" src="./assets/credit-card-chip-gold.png">
+                            <img class="card__front-logo card__logo" src="./assets/logo_visa.jpg">
+                            <p class="card_numer">{{card.number}}</p>
+                            <div class="card__space-75">
+                                <span class="card__label">Card holder</span>
+                                <p class="card__info">{{card.cardHolder}}</p>
                             </div>
-                            <img class="card__back-square card__square" src="./assets/credit-card-chip-gold.png">
-                            <img class="card__back-logo card__logo" src="./assets/logo_visa.jpg">
+                            <div class="card__space-25">
+                                <span class="card__label">Expires</span>
+                                <p class="card__info">{{card.thruDate}}</p>
+                            </div>
+                        </div>
+
+                        <div class="card__back">
+                            <div class="card__black-line"></div>
+                            <div class="card__back-content">
+                                <div class="card__secret">
+                                    <p class="card__secret--last">{{card.cvv}}</p>
+                                </div>
+                                <img class="card__back-square card__square" src="./assets/credit-card-chip-gold.png">
+                                <img class="card__back-logo card__logo" src="./assets/logo_visa.jpg">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </template>
+
+        <div v-else>
+            <p class="text-white text-center">
+                You don't have credit cards
+            </p>
         </div>
-        <div v-else="">You don't have credit cards</div>
 
         <h3 class="text-center mt-4">Debit Cards</h3>
-        <div v-if="debitCards != null" class="d-flex flex-wrap gap-3 mt-4 justify-content-around">
-            <div class="card bg-transparent" v-for="card in debitCards">
-                <div class="card__inner">
-                    <div class="card__front">
-                        <img class="card__front-square card__square" src="./assets/credit-card-chip-gold.png">
-                        <img class="card__front-logo card__logo" src="./assets/logo_visa.jpg">
-                        <p class="card_numer">{{card.number}}</p>
-                        <div class="card__space-75">
-                            <span class="card__label">Card holder</span>
-                            <p class="card__info">{{card.cardHolder}}</p>
-                        </div>
-                        <div class="card__space-25">
-                            <span class="card__label">Expires</span>
-                            <p class="card__info">{{card.thruDate}}</p>
-                        </div>
-                    </div>
-
-                    <div class="card__back">
-                        <div class="card__black-line"></div>
-                        <div class="card__back-content">
-                            <div class="card__secret">
-                                <p class="card__secret--last">{{card.cvv}}</p>
+        <template v-if="debitCards.length > 0">
+            <div class="d-flex flex-wrap gap-3 mt-4 justify-content-around">
+                <div class="card bg-transparent" v-for="card in debitCards">
+                    <div class="card__inner">
+                        <div class="card__front">
+                            <img class="card__front-square card__square" src="./assets/credit-card-chip-gold.png">
+                            <img class="card__front-logo card__logo" src="./assets/logo_visa.jpg">
+                            <p class="card_numer">{{card.number}}</p>
+                            <div class="card__space-75">
+                                <span class="card__label">Card holder</span>
+                                <p class="card__info">{{card.cardHolder}}</p>
                             </div>
-                            <img class="card__back-square card__square" src="./assets/credit-card-chip-gold.png">
-                            <img class="card__back-logo card__logo" src="./assets/logo_visa.jpg">
+                            <div class="card__space-25">
+                                <span class="card__label">Expires</span>
+                                <p class="card__info">{{card.thruDate}}</p>
+                            </div>
+                        </div>
+
+                        <div class="card__back">
+                            <div class="card__black-line"></div>
+                            <div class="card__back-content">
+                                <div class="card__secret">
+                                    <p class="card__secret--last">{{card.cvv}}</p>
+                                </div>
+                                <img class="card__back-square card__square" src="./assets/credit-card-chip-gold.png">
+                                <img class="card__back-logo card__logo" src="./assets/logo_visa.jpg">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div v-else="">
-            <p>
+        </template>
+
+        <div v-else>
+            <p class="text-white text-center">
                 You don't have debit cards
             </p>
         </div>
     </div>
+
     <div v-if="client.cards.length < 6">
         <a href="./create-cards.html">
             <button type="button" class="btn btn-primary mt-4 mb-5">Create a New Card</button>
