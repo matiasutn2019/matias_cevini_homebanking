@@ -17,13 +17,21 @@ bootRun {
 }
 
 dependencies {
+	// Spring-data-jpa is the spring way to access data using JPA
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	// use spring-data-rest on top of spring-data-jpa to create a REST-API layer
+	// with no code on top of your repositories and entities
+	// A spring alternative to spring-data-rest is using spring MVC directly to create a REST API on your own.
+	// Spring-data-jpa would still be used to implement the data access layer
 	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+	//  It is used for building the web application, including RESTful applications using Spring MVC.
+	//  It uses Tomcat as the default embedded container
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	runtimeOnly 'com.h2database:h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	// spring security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-	// https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml
+	// allows to return a response in xml format
 	implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.13.3'
 
 }
