@@ -1,13 +1,13 @@
 package com.mindhub.homebanking.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.time.LocalDateTime;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import javax.persistence.*;
-
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class Account {
@@ -20,7 +20,7 @@ public class Account {
 
     private String number;
 
-    private LocalDateTime creationTime;
+    private LocalDate creationTime;
 
     private Double balance;
 
@@ -34,7 +34,7 @@ public class Account {
     public Account() {
     }
 
-    public Account(String number, LocalDateTime creationTime, Double balance) {
+    public Account(String number, LocalDate creationTime, Double balance) {
         this.number = number;
         this.creationTime = creationTime;
         this.balance = balance;
@@ -52,11 +52,11 @@ public class Account {
         this.number = number;
     }
 
-    public LocalDateTime getCreationTime() {
+    public LocalDate getCreationTime() {
         return creationTime;
     }
 
-    public void setCreationTime(LocalDateTime creationTime) {
+    public void setCreationTime(LocalDate creationTime) {
         this.creationTime = creationTime;
     }
 

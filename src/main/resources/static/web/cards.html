@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cards</title>
     <link rel="shortcut icon" href="./assets/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/cardsStyle.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
@@ -46,13 +47,12 @@
         </nav>
     </div>
     <header>
-        <h1 class="text-center">My Cards</h1>
+        <h1 class="text-center mt-5 txt-shadow">My Cards</h1>
     </header>
 
     <div class="d-flex flex-column mb-5">
-        <h2>Client: {{client.firstName + ' ' + client.lastName}}</h2>
 
-        <h3 class="text-center mt-4">Credit Cards</h3>
+        <h2 class="text-center txt-shadow">Credit Cards</h2>
         <template v-if="creditCards.length > 0">
             <div class="d-flex flex-wrap gap-3 mt-4 justify-content-around">
                 <div class="card bg-transparent" v-for="card in creditCards">
@@ -62,7 +62,7 @@
                             <img class="card__front-logo card__logo" src="./assets/logo_visa.jpg">
                             <p class="card_numer">{{card.number}}</p>
                             <div class="card__space-75">
-                                <span class="card__label">Card holder</span>
+                                <span class="card__label">{{card.color}} CARD</span>
                                 <p class="card__info">{{card.cardHolder}}</p>
                             </div>
                             <div class="card__space-25">
@@ -92,7 +92,13 @@
             </p>
         </div>
 
-        <h3 class="text-center mt-4">Debit Cards</h3>
+        <div v-if="creditCards.length < 3">
+            <a :href="'./create-cards.html?type=' + 'CREDIT'">
+                <button type="button" class="btn btn-secondary mt-4 mb-5">Create a new Credit Card</button>
+            </a>
+        </div>
+
+        <h2 class="text-center mt-4 txt-shadow">Debit Cards</h2>
         <template v-if="debitCards.length > 0">
             <div class="d-flex flex-wrap gap-3 mt-4 justify-content-around">
                 <div class="card bg-transparent" v-for="card in debitCards">
@@ -102,7 +108,7 @@
                             <img class="card__front-logo card__logo" src="./assets/logo_visa.jpg">
                             <p class="card_numer">{{card.number}}</p>
                             <div class="card__space-75">
-                                <span class="card__label">Card holder</span>
+                                <span class="card__label">{{card.color}} CARD</span>
                                 <p class="card__info">{{card.cardHolder}}</p>
                             </div>
                             <div class="card__space-25">
@@ -131,18 +137,13 @@
                 You don't have debit cards
             </p>
         </div>
+        <div v-if="debitCards.length < 3">
+            <a :href="'./create-cards.html?type=' + 'DEBIT'">
+                <button type="button" class="btn btn-secondary mt-4 mb-5">Create a new Debit Card</button>
+            </a>
+        </div>
     </div>
 
-    <div v-if="client.cards.length < 6">
-        <a href="./create-cards.html">
-            <button type="button" class="btn btn-primary mt-4 mb-5">Create a New Card</button>
-        </a>
-    </div>
-
-    <footer class="d-flex justify-content-around">
-        <div class="fw-bold fs-5">MindHub Brothers</div>
-        <div class="fw-bold fs-5">&copy; Matias - 2022</div>
-    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
@@ -150,6 +151,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/vue@3"></script>
     <script src="./js/cards.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>
 
 </html>

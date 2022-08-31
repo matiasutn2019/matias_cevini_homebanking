@@ -11,7 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,7 +57,7 @@ public class ClientService implements IClientService {
     }
 
     private void newAccount(Client client) {
-        Account account = new Account(createNumber(), LocalDateTime.now(), 0.0);
+        Account account = new Account(createNumber(), LocalDate.now(), 0.0);
         client.addAccount(account);
         accountRepository.save(account);
     }
@@ -80,11 +80,11 @@ public class ClientService implements IClientService {
     }
 
     private void validate(String firstName, String lastName, String email, String password,
-                          Optional clientInDDBB) throws IllegalArgumentException {
+                          Optional<Client> clientInDDBB) throws IllegalArgumentException {
         if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty()) {
             throw new IllegalArgumentException("Invalid parameters");
         }
-        if (!clientInDDBB.isEmpty()) {
+        if (clientInDDBB.isPresent()) {
             throw new IllegalArgumentException("Email already registered");
         }
     }

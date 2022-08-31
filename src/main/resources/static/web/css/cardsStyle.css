@@ -1,7 +1,7 @@
 * {
     margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
@@ -9,8 +9,6 @@ body {
     padding: 1rem;
     height: 100%;
     width: 100%;
-    background: rgb(75, 75, 75);
-    background: linear-gradient(90deg, rgba(75, 75, 75, 0.7987570028011204) 60%, rgba(130, 130, 130, 0.7063200280112045) 100%);
 }
 
 .title {
@@ -164,7 +162,7 @@ body {
 }
 
 #logo {
-	width: 8rem;
+    width: 8rem;
     height: 5.5rem;
     margin-left: 1rem;
 }

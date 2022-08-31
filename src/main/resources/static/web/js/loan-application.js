@@ -36,6 +36,9 @@ createApp({
                 .then(res =>
                     this.accounts = res.data
                 )
+                .catch(error => {
+                    swal('Code: ' + error.response.status, error.response.data, "error");
+                })
         },
 
         getLoans() {
@@ -44,32 +47,60 @@ createApp({
                 .then(res =>
                     this.loans = res.data
                 )
+                .catch(error => {
+                    swal('Code: ' + error.response.status, error.response.data, "error");
+                })
         },
 
         apply() {
-            if (isNaN(this.amountSelected) || this.amountSelected == ''
-                || this.loanSelected == '' || this.accountDestination == ''
-                || parseInt(this.amountSelected) > parseInt(this.maxAmount)) {
-                alert('Please enter the corresponding values');
-            } else if (window.confirm("Are you sure to apply?")) {
-                axios
-                    .post('/api/loans',
-                        {
-                            id: this.loanId[0],
-                            amount: this.amountSelected,
-                            payments: this.paymentSelected,
-                            accountNumber: this.accountDestination
-                        },
-                        {
-                            headers: { 'content-type': 'application/json' }
+            if (this.amountSelected == ''
+                || this.loanSelected == '' || this.accountDestination == '') {
+                swal('', 'Type the corresponding values', "warning",);
+            } else {
+                swal({
+                    title: "",
+                    text: "Are you sure to apply?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: false,
+                })
+                    .then((willApply) => {
+                        if (willApply) {
+                            axios
+                                .post('/api/loans',
+                                    {
+                                        id: this.loanId[0],
+                                        amount: this.amountSelected,
+                                        payments: this.paymentSelected,
+                                        accountNumber: this.accountDestination
+                                    },
+                                    {
+                                        headers: { 'content-type': 'application/json' }
+                                    }
+                                )
+                                .then(res => {
+                                    if (res.status === 201) {
+                                        swal('', 'Loan granted!', "success")
+                                            .then((ok) => {
+                                                if (ok) {
+                                                    window.location.reload()
+                                                }
+                                            })
+                                    }
+                                })
+                                .catch(error => {
+                                    swal('Code: ' + error.response.status, error.response.data, "error");
+                                })
+
+                        } else {
+                            swal('', "Load rejected", "success")
+                                .then((ok) => {
+                                    if (ok) {
+                                        window.location.reload()
+                                    }
+                                })
                         }
-                    )
-                    .then(res => {
-                        if (res.status === 201) {
-                            alert('Successfully!!!');
-                            window.location.reload();
-                        }
-                    })
+                    });
             }
         }
     },
@@ -82,8 +113,12 @@ createApp({
             this.payments = this.loans
                 .filter(x => x.name == this.loanSelected)
                 .map(x => x.payments);
-            this.paymentAmount = (parseInt(this.amountSelected) + parseInt(this.amountSelected) * 0.2)
-                / parseInt(this.paymentSelected)
+            if (this.paymentSelected != '') {
+                this.paymentAmount = (parseInt(this.amountSelected) + parseInt(this.amountSelected) * 0.2)
+                    / parseInt(this.paymentSelected)
+            } else {
+                this.paymentAmount = 0
+            }
             this.loanId = this.loans
                 .filter(x => x.name == this.loanSelected)
                 .map(x => x.id);
@@ -91,11 +126,14 @@ createApp({
 
         validateAmount() {
             if (parseInt(this.amountSelected) > parseInt(this.maxAmount)) {
-                alert('The amount is too high. Please select a different amount.');
-                this.amountSelected = 0;
+                swal('', 'The amount is too high. Please select a different amount', "error");
+                this.amountSelected = '';
             } else if (isNaN(this.amountSelected)) {
-                alert('The amount is not a number. Please select a different amount.');
-                this.amountSelected = 0;
+                swal('', 'The amount is not a number. Please select a different amount', "error");
+                this.amountSelected = '';
+            } else if (parseInt(this.amountSelected) <= 0) {
+                swal('', 'The amount can not be zero', "error");
+                this.amountSelected = '';
             }
         }
     }

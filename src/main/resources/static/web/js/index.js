@@ -19,7 +19,7 @@ createApp({
     methods: {
         login() {
             if (this.emailLogin == '' || this.passwordLogin == '') {
-                alert('Ingrese los valores correspondientes');
+                swal('', 'Type the corresponding values', "warning",);
             } else {
                 axios
                     .post('/api/login', 'email=' + this.emailLogin + '&password=' + this.passwordLogin,
@@ -31,32 +31,36 @@ createApp({
                     })
                     .catch(error => {
                         if (error.response.data.exception === 'No value present') {
-                            alert('Code: ' + error.response.status + '\nUsername not found');
+                            swal('Code: ' + error.response.status, 'Username not found', "error");
                             this.emailLogin = ''
+                            this.passwordLogin = ''
                         } else if (error.response.data.exception === 'Bad credentials') {
-                            alert('Code: ' + error.response.status + '\nPassword incorrect');
+                            swal('Code: ' + error.response.status, 'Password incorrect', "error");
                             this.passwordLogin = ''
                         } else if (error.response.data.exception === 'Maximum sessions of 1 for this principal exceeded') {
-                            alert('Code: ' + error.response.status + '\nYou are already logged in');
+                            swal('Code: ' + error.response.status, 'You are already logged in', "error");
                         }
+                        swal('Code: ' + error.response.status, error.response.data, "error");
                     })
             }
         },
         register() {
             if (this.firstName == '' || this.lastName == '' || this.email == '' || this.password == '') {
-                alert('Ingrese los valores correspondientes');
+                swal('', 'Type the corresponding values', "warning");
             } else {
                 axios
                     .post('/api/clients', "firstName=" + this.firstName + "&lastName="
                         + this.lastName + "&email=" + this.email + "&password=" + this.password,
                         { headers: { 'content-type': 'application/x-www-form-urlencoded' } })
                     .then(response => {
-                        this.emailLogin = this.email;
-                        this.passwordLogin = this.password;
-                        this.login()
+                        if (response.status === 201) {
+                            this.emailLogin = this.email;
+                            this.passwordLogin = this.password;
+                            this.login()
+                        }
                     })
                     .catch(error => {
-                        alert('Code: ' + error.response.status + '\n' + error.response.data);
+                        swal('Code: ' + error.response.status, error.response.data, 'error');
                     })
             }
         }

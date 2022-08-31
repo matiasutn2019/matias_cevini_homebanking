@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 public class Transaction {
@@ -17,7 +17,7 @@ public class Transaction {
 
     private TransactionType type;
 
-    private LocalDateTime date;
+    private LocalDate date;
 
     private double amount;
 
@@ -30,7 +30,7 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(TransactionType type, LocalDateTime date,
+    public Transaction(TransactionType type, LocalDate date,
                        double amount, String description) {
         this.type = type;
         this.date = date;
@@ -59,11 +59,11 @@ public class Transaction {
         this.account = account;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

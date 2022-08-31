@@ -3,7 +3,7 @@ package com.mindhub.homebanking.DTO;
 import com.mindhub.homebanking.models.Transaction;
 import com.mindhub.homebanking.models.TransactionType;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class TransactionDTO {
 
@@ -11,7 +11,7 @@ public class TransactionDTO {
 
     private TransactionType type;
 
-    private LocalDateTime date;
+    private LocalDate date;
 
     private double amount;
 
@@ -36,7 +36,7 @@ public class TransactionDTO {
         return type;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 

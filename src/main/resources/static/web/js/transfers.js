@@ -27,6 +27,9 @@ createApp({
                 .then(response =>
                     window.location.href = "/web/index.html"
                 )
+                .catch(error => {
+                    swal('Code: ' + error.response.status, error.response.data, "error");
+                })
         },
 
         loadData() {
@@ -37,29 +40,57 @@ createApp({
                     this.client = this.response.data;
                     this.accounts = this.client.accountsDTO;
                 })
+                .catch(error => {
+                    swal('Code: ' + error.response.status, error.response.data, "error");
+                })
         },
 
         doTransaction() {
-            if (this.amount == 0 || isNaN(this.amount) || this.description == '' || this.accountOrigin == '' || this.accountDestination == '') {
-                alert('Please enter the corresponding values');
-            } else if (window.confirm("Are you sure to carry out the transaction?")) {
-                axios
-                    .post('/api/transactions',
-                        'amount=' + this.amount +
-                        '&description=' + this.description +
-                        '&accountOriginNumber=' + this.accountOrigin +
-                        '&accountDestinationNumber=' + this.accountDestination,
-                        { headers: { 'content-type': 'application/x-www-form-urlencoded' } })
-                    .then(response => {
-                        if (response.status === 200) {
-                            alert('Successfully!!!')
-                            window.location.reload()
+            if (isNaN(this.amount) || this.description == ''
+                || this.accountOrigin == '' || this.accountDestination == '') {
+                swal('', 'Type the corresponding values', "warning");
+            } else {
+                swal({
+                    title: "",
+                    text: "Are you sure to transfer?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: false,
+                })
+                    .then((willTransfer) => {
+                        if (willTransfer) {
+                            axios
+                                .post('/api/transactions',
+                                    'amount=' + this.amount +
+                                    '&description=' + this.description +
+                                    '&accountOriginNumber=' + this.accountOrigin +
+                                    '&accountDestinationNumber=' + this.accountDestination,
+                                    { headers: { 'content-type': 'application/x-www-form-urlencoded' } })
+                                .then(response => {
+                                    if (response.status === 200) {
+                                        swal('', 'Transfer done!', "success")
+                                            .then((ok) => {
+                                                if (ok) {
+                                                    window.location.reload()
+                                                }
+                                            })
+                                    }
+                                })
+                                .catch(error => {
+                                    swal('Code: ' + error.response.status, error.response.data, "error");
+                                })
+                        } else {
+                            swal('', "Transfer rejected", "success")
+                                .then((ok) => {
+                                    if (ok) {
+                                        window.location.href = "/web/accounts.html"
+                                    }
+                                })
+
                         }
                     })
-            } else {
-                window.location.href = "/web/accounts.html"
             }
-        },
+        }
 
     },
 
@@ -73,11 +104,14 @@ createApp({
 
         validateAmount() {
             if (parseInt(this.amount) > parseInt(this.accountOriginBalance)) {
-                alert('The amount is too high. Please select a different amount.');
-                this.amount = 0;
+                swal('', 'The amount is too high. Please select a different amount', "error");
+                this.amount = '';
             } else if (isNaN(this.amount)) {
-                alert('The amount is not a number. Please select a different amount.');
-                this.amount = 0;
+                swal('', 'The amount is not a number. Please select a different amount', "error");
+                this.amount = '';
+            } else if (parseInt(this.amount) <= 0) {
+                swal('', 'The amount can not be zero', "error");
+                this.amount = '';
             }
         },
     }

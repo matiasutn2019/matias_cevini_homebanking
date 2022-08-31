@@ -214,6 +214,43 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "crear cliente",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/clients?firstName=john&lastName=doe&email=doe@gmail.com&password=123",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"clients"
+					],
+					"query": [
+						{
+							"key": "firstName",
+							"value": "john"
+						},
+						{
+							"key": "lastName",
+							"value": "doe"
+						},
+						{
+							"key": "email",
+							"value": "doe@gmail.com"
+						},
+						{
+							"key": "password",
+							"value": "123"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

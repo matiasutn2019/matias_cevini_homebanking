@@ -11,7 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,7 +53,7 @@ public class LoanService implements ILoanService {
         ClientLoan clientLoan = new ClientLoan(amountPlusTax, loanApplication.getPayments(), client, loan);
         //Se debe crear una solicitud de préstamo con el monto solicitado sumando el 20% del mismo
 
-        Transaction transaction = new Transaction(CREDIT, LocalDateTime.now(), loanApplication.getAmount(),
+        Transaction transaction = new Transaction(CREDIT, LocalDate.now(), loanApplication.getAmount(),
                 loan.getName() + " loan approved");
         account.addTransaction(transaction);
         //Se debe crear una transacción “CREDIT” asociada a la cuenta de destino (el monto debe quedar positivo)

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.*;
-import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VALUE;
 
 @RestController
 @RequestMapping(value = "/api")
@@ -30,7 +29,7 @@ public class CardController {
         }
     }
 
-    @GetMapping(value = "/clients/current/cards", produces = APPLICATION_FORM_URLENCODED_VALUE)
+    @GetMapping(value = "/clients/current/cards")
     public ResponseEntity<List<CardDTO>> cardList(Authentication authentication) {
         return new ResponseEntity<>(cardService.getCards(authentication), OK);
     }

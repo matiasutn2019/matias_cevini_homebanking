@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -40,7 +40,7 @@ public class AccountService implements IAccountService {
         if (client.getAccounts().stream().count() >= 3) {
             throw new Exception("You have reached the account limit");
         }
-        Account account = new Account(createNumber(), LocalDateTime.now(), 0.0);
+        Account account = new Account(createNumber(), LocalDate.now(), 0.0);
         client.addAccount(account);
         accountRepository.save(account);
     }

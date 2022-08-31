@@ -29,7 +29,7 @@ public class CardService implements ICardService {
     @Override
     public void createCard(String cardType, String cardColor, Authentication authentication) throws Exception {
         Client client = clientRepository.findByEmail(authentication.getName()).get();
-        validateCardLimit(client.getCards(), cardType);
+        validateCardLimit(client.getCards(), cardType, cardColor);
         Card card = newCard(cardType, cardColor, client);
         client.addCard(card);
         cardRepository.save(card);
@@ -65,9 +65,12 @@ public class CardService implements ICardService {
         return number;
     }
 
-    private void validateCardLimit(Set<Card> cards, String type) throws Exception {
-        if (cards.stream().filter(x -> x.getType().toString().equals(type)).count() >= 3) {
+    private void validateCardLimit(Set<Card> cards, String type, String color) throws Exception {
+        List<Card> filteredCards = cards.stream().filter(x -> x.getType().toString().equals(type)).collect(toList());
+        if (filteredCards.size() >= 3) {
             throw new Exception("You have reached the card limit of type " + type);
+        } else if (filteredCards.stream().anyMatch(x -> x.getColor().toString().equals(color))) {
+            throw new Exception("You already have a card of color " + color);
         }
     }
 }

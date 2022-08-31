@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.mindhub.homebanking.models.LoanType.*;
@@ -34,18 +33,18 @@ public class HomebankingApplication {
                                       CardRepository cardRepository) {
         return (args) -> {
             Client cliente1 = new Client("Lorenzo", "Melba", "melba@gmail.com", passwordEncoder.encode("pass123"));
-            Account cuenta1 = new Account("VIN001", LocalDateTime.now(), 5000.0);
-            Account cuenta2 = new Account("VIN002", LocalDateTime.now().plusDays(1l), 7500.0);
+            Account cuenta1 = new Account("VIN-001", LocalDate.now(), 5000.0);
+            Account cuenta2 = new Account("VIN-002", LocalDate.now().plusDays(1l), 7500.0);
             cliente1.addAccount(cuenta1);
             cliente1.addAccount(cuenta2);
-            Transaction t1 = new Transaction(TransactionType.CREDIT, LocalDateTime.now(),
+            Transaction t1 = new Transaction(TransactionType.CREDIT, LocalDate.now(),
                     1000.0, "crédito de $ 1000 a la cuenta 1");
-            Transaction t2 = new Transaction(TransactionType.DEBIT, LocalDateTime.now(),
-                    500.0, "débito de $ 1000 a la cuenta 1");
-            Transaction t3 = new Transaction(TransactionType.CREDIT, LocalDateTime.now(),
+            Transaction t2 = new Transaction(TransactionType.DEBIT, LocalDate.now(),
+                    -500.0, "débito de $ 500 a la cuenta 1");
+            Transaction t3 = new Transaction(TransactionType.CREDIT, LocalDate.now(),
                     1000.0, "crédito de $ 1000 a la cuenta 2");
-            Transaction t4 = new Transaction(TransactionType.DEBIT, LocalDateTime.now(),
-                    500.0, "débito de $ 1000 a la cuenta 2");
+            Transaction t4 = new Transaction(TransactionType.DEBIT, LocalDate.now(),
+                    -500.0, "débito de $ 500 a la cuenta 2");
             cuenta1.addTransaction(t1);
             cuenta1.addTransaction(t2);
             cuenta2.addTransaction(t3);
@@ -59,18 +58,18 @@ public class HomebankingApplication {
             transactionRepository.save(t4);
 
             Client cliente2 = new Client("Juan", "Garcia", "juancho@gmail.com", passwordEncoder.encode("pass456"));
-            Account cuenta3 = new Account("VIN003", LocalDateTime.now(), 5000.0);
-            Account cuenta4 = new Account("VIN004", LocalDateTime.now().plusDays(1l), 7500.0);
+            Account cuenta3 = new Account("VIN-003", LocalDate.now(), 5000.0);
+            Account cuenta4 = new Account("VIN-004", LocalDate.now().plusDays(1l), 7500.0);
             cliente2.addAccount(cuenta3);
             cliente2.addAccount(cuenta4);
-            Transaction t5 = new Transaction(TransactionType.CREDIT, LocalDateTime.now(),
+            Transaction t5 = new Transaction(TransactionType.CREDIT, LocalDate.now(),
                     1000.0, "crédito de $ 1000 a la cuenta 3");
-            Transaction t6 = new Transaction(TransactionType.DEBIT, LocalDateTime.now(),
-                    500.0, "débito de $ 500 a la cuenta 3");
-            Transaction t7 = new Transaction(TransactionType.CREDIT, LocalDateTime.now(),
+            Transaction t6 = new Transaction(TransactionType.DEBIT, LocalDate.now(),
+                    -500.0, "débito de $ 500 a la cuenta 3");
+            Transaction t7 = new Transaction(TransactionType.CREDIT, LocalDate.now(),
                     1000.0, "crédito de $ 1000 a la cuenta 4");
-            Transaction t8 = new Transaction(TransactionType.DEBIT, LocalDateTime.now(),
-                    500.0, "débito de $ 500 a la cuenta 4");
+            Transaction t8 = new Transaction(TransactionType.DEBIT, LocalDate.now(),
+                    -500.0, "débito de $ 500 a la cuenta 4");
             cuenta3.addTransaction(t5);
             cuenta3.addTransaction(t6);
             cuenta4.addTransaction(t7);
@@ -107,19 +106,15 @@ public class HomebankingApplication {
                     cardHolder1, CardColor.PLATINUM);
             Card card3 = new Card(CardType.CREDIT, "8888 9999 0000 1111", "789", LocalDate.now(), LocalDate.now().plusYears(5),
                     cardHolder2, CardColor.SILVER);
-            Card card4 = new Card(CardType.CREDIT, "0000 1111 5555 9999", "555", LocalDate.now(), LocalDate.now().plusYears(5),
-                    cardHolder1,CardColor.GOLD);
             Card card5 = new Card(CardType.CREDIT, "0000 1111 5555 4444", "730", LocalDate.now(), LocalDate.now().plusYears(5),
                     cardHolder1,CardColor.SILVER);
             cliente1.addCard(card1);
             cliente1.addCard(card2);
-            cliente1.addCard(card4);
             cliente1.addCard(card5);
             cliente2.addCard(card3);
             cardRepository.save(card1);
             cardRepository.save(card2);
             cardRepository.save(card3);
-            cardRepository.save(card4);
             cardRepository.save(card5);
 
             Client admin = new Client("Admin", "Rodriguez",

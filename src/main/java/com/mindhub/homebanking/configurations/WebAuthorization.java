@@ -6,7 +6,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.WebAttributes;
-import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,31 +39,37 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter {
                 .authenticated()
                 .and()
                 //controller login
-                .formLogin()
-                    .loginPage("/api/login")
-                    .usernameParameter("email")
-                    .passwordParameter("password")
-                    // if login is successful, just clear the flags asking for authentication
-                    .successHandler((req, res, auth) -> clearAuthenticationAttributes(req))
-                    // if login fails, just send an authentication failure response
-                    .failureHandler((req, res, exc) -> {
-                        //res.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-                        ObjectMapper objectMapper = new ObjectMapper();
-                        res.setStatus(UNAUTHORIZED.value());
-                        Map<String, Object> data = new HashMap<>();
-                        data.put(
-                                "exception",
-                                exc.getMessage());
-                        res.getOutputStream()
-                                .println(objectMapper.writeValueAsString(data));
-                    })
-                .and()
+                .formLogin(login -> login
+                        .loginPage("/api/login")
+                        .usernameParameter("email")
+                        .passwordParameter("password")
+                        // if login is successful, just clear the flags asking for authentication
+                        .successHandler((req, res, auth) -> clearAuthenticationAttributes(req))
+                        // if login fails, just send an authentication failure response
+                        .failureHandler((req, res, exc) -> {
+                            //res.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+                            ObjectMapper objectMapper = new ObjectMapper();
+                            //ObjectMapper provides functionality for reading and writing JSON
+                            res.setStatus(UNAUTHORIZED.value());
+                            //Sets the status code for this response
+                            Map<String, Object> data = new HashMap<>();
+                            //An object that maps keys to values. A map cannot contain duplicate keys
+                            data.put("exception", exc.getMessage());
+                            res.getOutputStream()//Returns a ServletOutputStream suitable for writing binary data in the response
+                                    .println(objectMapper.writeValueAsString(data));
+                        })
+                )
                 //controller logout
-                .logout()
-                    .logoutUrl("/api/logout")
-                    .deleteCookies("JSESSIONID")
-                    // if logout is successful, just send a success response
-                    .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());
+                .logout(logout -> logout
+                        .logoutUrl("/api/logout")
+                        .logoutSuccessUrl("/web/index.html")
+                        // if logout is successful, just send a success response
+                        //.logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler())
+                        .logoutSuccessHandler(((request, response, authentication) ->
+                            request.getSession().invalidate())
+                        )
+                        .deleteCookies("JSESSIONID")
+                );
 
         //disabling frameOptions so h2-console can be accessed
         http.headers().frameOptions().disable();
@@ -73,11 +78,12 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter {
         http.exceptionHandling().authenticationEntryPoint((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
 
         // invalid url - maximum sessions allowed - session expired
-        http.sessionManagement()
+        http.sessionManagement(sm -> sm
                 .invalidSessionUrl("/web/index.html")
                 .maximumSessions(1)
                 .maxSessionsPreventsLogin(true)
-                .expiredUrl("/web/index.html");
+                .expiredUrl("/web/index.html")
+        );
     }
 
     private void clearAuthenticationAttributes(HttpServletRequest request) {

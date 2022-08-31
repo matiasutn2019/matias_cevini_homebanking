@@ -46,32 +46,25 @@
         </nav>
     </div>
 
-    <div class="row justify-content-center mb-5">
-        <div class="col-md-6 col-lg-4">
-            <h1>Choose Your Card</h1>
+    <div class="row justify-content-center mt-5 mb-5">
+        <div class="text-center mb-1">
+            <h1 class="heading-section txt-shadow">Choose Your Card</h1>
+        </div>
+        <div class="col-md-8 col-lg-6">
             <div class="mb-3">
-                <label for="select1" class="form-label">Card Type</label>
-                <select id="select1" class="form-select" v-model="cardType">
-                    <option value="CREDIT">CREDIT</option>
-                    <option value="DEBIT">DEBIT</option>
-                </select>
+                <label for="select1" class="form-label txt-shadow-2">Card Type: {{cardType}}</label>
             </div>
             <div class="mb-3">
-                <label for="select2" class="form-label">Card Color</label>
+                <label for="select2" class="form-label txt-shadow-2">Card Color</label>
                 <select id="select2" class="form-select" v-model="cardColor">
-                    <option value="SILVER">SILVER</option>
-                    <option value="GOLD">GOLD</option>
-                    <option value="PLATINUM">PLATINUM</option>
+                    <template v-for="color in validCardColors">
+                        <option :value="color">{{color}}</option>
+                    </template>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary" @click="create()">Create</button>
+            <button type="submit" class="btn btn-secondary" @click="create()">Create</button>
         </div>
     </div>
-
-    <footer class="d-flex justify-content-around">
-        <div class="fw-bold fs-5">MindHub Brothers</div>
-        <div class="fw-bold fs-5">&copy; Matias - 2022</div>
-    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
@@ -79,6 +72,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/vue@3"></script>
     <script src="./js/create-cards.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>
 
 </html>

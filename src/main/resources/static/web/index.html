@@ -18,36 +18,64 @@
         <img src="./assets/logo.png" alt="logo" id="logo">
     </div>
     <div class="row justify-content-center">
-        <div class="col-md-6 text-center mb-1">
-            <h2 class="heading-section">Login</h2>
+        <div class="col-md-6 text-center mb-1 mt-3">
+            <h1 class="heading-section txt-shadow">Welcome to our Bank</h1>
         </div>
     </div>
-    <div class="row justify-content-center">
+
+
+    <div class="row justify-content-around mt-5" id="main-section">
+
+        <div id="carouselExampleSlidesOnly" class="carousel slide col-lg-4 mb-3" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="./assets/bank1.webp" class="d-block w-100 car_img" alt="bank">
+                </div>
+                <div class="carousel-item">
+                    <img src="./assets/bank2.webp" class="d-block w-100 car_img" alt="bank">
+                </div>
+            </div>
+        </div>
+
         <div class="col-md-6 col-lg-4">
+            <h2 class="text-center txt-shadow">Login</h2>
             <div class="login-wrap p-0">
-                <form action="#" class="signin-form">
-                    <div class="form-group mb-3">
+                <form action="#" class="signin-form mt-4">
+                    <div class="form-group mt-3">
                         <input type="text" class="form-control" placeholder="Username" required v-model="emailLogin">
                     </div>
-                    <div class="form-group mb-3">
+                    <div class="form-group mt-4">
                         <input id="password-field" type="password" class="form-control" placeholder="Password" required
                             v-model="passwordLogin">
                     </div>
-                    <div class="form-group mb-3">
-                        <button type="submit" class="form-control btn btn-primary submit px-3" @click.prevent="login()">
+                    <div class="form-group mt-4">
+                        <button type="submit" class="form-control btn submit px-3 btn-secondary"
+                            @click.prevent="login()">
                             Sign In</button>
                     </div>
                 </form>
 
                 <!-- Button trigger modal -->
-                <div class="form-group mb-3">
-                    <button type="button" class="form-control btn btn-primary" data-bs-toggle="modal"
+                <div class="form-group mt-4 mb-4">
+                    <button type="button" class="form-control btn btn-secondary" data-bs-toggle="modal"
                         data-bs-target="#exampleModal">
                         Don't have an account yet? Sign Up
                     </button>
                 </div>
             </div>
         </div>
+
+        <div id="carouselExampleSlidesOnly" class="carousel slide col-lg-4" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="./assets/bank3.jpeg" class="d-block w-100 car_img" alt="bank">
+                </div>
+                <div class="carousel-item">
+                    <img src="./assets/bank4.jpg" class="d-block w-100 car_img" alt="bank">
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- Modal -->
@@ -81,16 +109,18 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" @click.prevent="register()">Create Client</button>
+                    <button type="button" class="btn btn-success" @click.prevent="register()">Create Client</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <footer class="d-flex justify-content-around">
-        <div class="fw-bold fs-5">MindHub Brothers</div>
-        <div class="fw-bold fs-5">&copy; Matias - 2022</div>
+    <footer>
+        <div class="d-flex justify-content-around">
+            <div class="fw-bold fs-5">MindHub Brothers</div>
+            <div class="fw-bold fs-5">&copy; Matias - 2022</div>
+        </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
@@ -99,6 +129,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/vue@3"></script>
     <script src="./js/index.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>
 
 </html>
