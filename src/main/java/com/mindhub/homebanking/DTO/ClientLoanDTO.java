@@ -1,13 +1,12 @@
 package com.mindhub.homebanking.DTO;
 
 import com.mindhub.homebanking.models.ClientLoan;
-import com.mindhub.homebanking.models.LoanType;
 
 public class ClientLoanDTO {
 
     private Long idClientLoan;
     private Long idLoan;
-    private LoanType name;
+    private String name;
     private Double amount;
     private Integer payment;
 
@@ -29,7 +28,7 @@ public class ClientLoanDTO {
         return idLoan;
     }
 
-    public LoanType getName() {
+    public String getName() {
         return name;
     }
 
