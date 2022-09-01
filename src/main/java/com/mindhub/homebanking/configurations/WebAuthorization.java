@@ -6,6 +6,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.WebAttributes;
+import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @EnableWebSecurity
@@ -55,35 +58,36 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter {
                             Map<String, Object> data = new HashMap<>();
                             //An object that maps keys to values. A map cannot contain duplicate keys
                             data.put("exception", exc.getMessage());
-                            res.getOutputStream()//Returns a ServletOutputStream suitable for writing binary data in the response
+                            //Returns a ServletOutputStream suitable for writing binary data in the response
+                            res.getOutputStream()
                                     .println(objectMapper.writeValueAsString(data));
                         })
                 )
                 //controller logout
                 .logout(logout -> logout
-                        .logoutUrl("/api/logout")
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/api/logout", "POST"))
+                        //.logoutUrl("/api/logout")
                         .logoutSuccessUrl("/web/index.html")
                         // if logout is successful, just send a success response
-                        //.logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler())
-                        .logoutSuccessHandler(((request, response, authentication) ->
-                            request.getSession().invalidate())
-                        )
+                        // If this is specified, logoutSuccessUrl(String) is ignored
+                        .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(OK))
                         .deleteCookies("JSESSIONID")
+                        .invalidateHttpSession(true)
+                )
+                // invalid session id - maximum sessions allowed - redirect if session expired
+                .sessionManagement(sm -> sm
+                        .invalidSessionUrl("/web/index.html")
+                        .maximumSessions(1)
+                        .maxSessionsPreventsLogin(false)
+                        .expiredUrl("/web/index.html")
                 );
 
         //disabling frameOptions so h2-console can be accessed
         http.headers().frameOptions().disable();
 
         // if user is not authenticated, just send an authentication failure response
-        http.exceptionHandling().authenticationEntryPoint((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
-
-        // invalid url - maximum sessions allowed - session expired
-        http.sessionManagement(sm -> sm
-                .invalidSessionUrl("/web/index.html")
-                .maximumSessions(1)
-                .maxSessionsPreventsLogin(true)
-                .expiredUrl("/web/index.html")
-        );
+        http.exceptionHandling().authenticationEntryPoint((req, res, exc)
+                -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
     }
 
     private void clearAuthenticationAttributes(HttpServletRequest request) {
