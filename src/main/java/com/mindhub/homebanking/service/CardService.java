@@ -8,6 +8,7 @@ import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.CardRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.service.abstraction.ICardService;
+import com.mindhub.homebanking.utils.CardUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -42,27 +43,9 @@ public class CardService implements ICardService {
     }
 
     private Card newCard(String cardType, String cardColor, Client client) {
-        return new Card(CardType.valueOf(cardType), createNumber(),
-                getRandom(3), LocalDate.now(), LocalDate.now().plusYears(5),
+        return new Card(CardType.valueOf(cardType), validateCardNumber(),
+                CardUtils.getCVV(), LocalDate.now(), LocalDate.now().plusYears(5),
                 client.getFirstName() + client.getLastName(), CardColor.valueOf(cardColor));
-    }
-
-    private String getRandom(int size) {
-        StringBuilder num = new StringBuilder();
-        for (int i = 0; i < size; i++) {
-            int num2 = (int) (Math.random() * 10);
-            num.append(num2);
-        }
-        return num.toString();
-    }
-
-    private String createNumber() {
-        String number;
-        do {
-            number = getRandom(4) + " " + getRandom(4) +
-                    " " + getRandom(4) + " " + getRandom(4);
-        } while (!cardRepository.findByNumber(number).isEmpty());
-        return number;
     }
 
     private void validateCardLimit(Set<Card> cards, String type, String color) throws Exception {
@@ -72,5 +55,13 @@ public class CardService implements ICardService {
         } else if (filteredCards.stream().anyMatch(x -> x.getColor().toString().equals(color))) {
             throw new Exception("You already have a card of color " + color);
         }
+    }
+
+    private String validateCardNumber() {
+        String cardNumber = "";
+        do {
+            cardNumber = CardUtils.getCardNumber();
+        } while (cardRepository.findByNumber(cardNumber).isPresent());
+        return cardNumber;
     }
 }
