@@ -1,26 +1,34 @@
 package com.mindhub.homebanking;
 
+import com.mindhub.homebanking.models.*;
+import com.mindhub.homebanking.repositories.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @SpringBootApplication
 public class HomebankingApplication {
 
-    //@Autowired
-    //private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 	public static void main(String[] args) {
 		SpringApplication.run(HomebankingApplication.class, args);
 	}
 
-    /*
     @Bean
     public CommandLineRunner initData(ClientRepository clientRepository,
-                                      AccountRepository accountRepository,
-                                      TransactionRepository transactionRepository,
-                                      LoanRepository loanRepository,
-                                      ClientLoanRepository clientLoanRepository,
-                                      CardRepository cardRepository) {
+									  AccountRepository accountRepository,
+									  TransactionRepository transactionRepository,
+									  LoanRepository loanRepository,
+									  ClientLoanRepository clientLoanRepository,
+									  CardRepository cardRepository) {
         return (args) -> {
             Client cliente1 = new Client("Lorenzo", "Melba", "melba@gmail.com", passwordEncoder.encode("pass123"));
             Account cuenta1 = new Account("VIN-001", LocalDate.now(), 5000.0);
@@ -72,9 +80,9 @@ public class HomebankingApplication {
             transactionRepository.save(t7);
             transactionRepository.save(t8);
 
-            Loan l1 = new Loan(HIPOTECARIO, 500000.0, List.of(12,24,36,48,60));
-            Loan l2 = new Loan(PERSONAL, 100000.0, List.of(6,12,24));
-            Loan l3 = new Loan(AUTOMOTRIZ, 300000.0, List.of(6,12,24,36));
+            Loan l1 = new Loan("HIPOTECARIO", 500000.0, List.of(12,24,36,48,60));
+            Loan l2 = new Loan("PERSONAL", 100000.0, List.of(6,12,24));
+            Loan l3 = new Loan("AUTOMOTRIZ", 300000.0, List.of(6,12,24,36));
             loanRepository.save(l1);
             loanRepository.save(l2);
             loanRepository.save(l3);
@@ -97,7 +105,7 @@ public class HomebankingApplication {
             Card card3 = new Card(CardType.CREDIT, "8888 9999 0000 1111", "789", LocalDate.now(), LocalDate.now().plusYears(5),
                     cardHolder2, CardColor.SILVER);
             Card card5 = new Card(CardType.CREDIT, "0000 1111 5555 4444", "730", LocalDate.now(), LocalDate.now().plusYears(5),
-                    cardHolder1,CardColor.SILVER);
+                    cardHolder1, CardColor.SILVER);
             cliente1.addCard(card1);
             cliente1.addCard(card2);
             cliente1.addCard(card5);
@@ -113,6 +121,4 @@ public class HomebankingApplication {
 
         };
     }
-
-     */
 }
