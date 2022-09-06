@@ -2,6 +2,9 @@ package com.mindhub.homebanking.utils;
 
 public final class CardUtils {
 
+    private CardUtils() {
+    }
+
     public static String getCVV() {
         return (int) ((Math.random() * (999-100)) + 100) + "";
     }
