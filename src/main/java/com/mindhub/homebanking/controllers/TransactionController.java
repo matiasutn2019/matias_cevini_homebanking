@@ -1,5 +1,6 @@
 package com.mindhub.homebanking.controllers;
 
+import com.mindhub.homebanking.exceptions.InvalidParameterException;
 import com.mindhub.homebanking.service.abstraction.ITransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
@@ -23,13 +23,9 @@ public class TransactionController {
     public ResponseEntity<?> transaction(@RequestParam Double amount, @RequestParam String description,
                                          @RequestParam String accountOriginNumber,
                                          @RequestParam String accountDestinationNumber,
-                                         Authentication authentication) {
-        try {
-            transactionService.transaction(amount, description, accountOriginNumber,
+                                         Authentication authentication) throws InvalidParameterException {
+            transactionService.handleTransaction(amount, description, accountOriginNumber,
                     accountDestinationNumber, authentication);
             return new ResponseEntity<>(OK);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(e.getMessage(), FORBIDDEN);
-        }
     }
 }

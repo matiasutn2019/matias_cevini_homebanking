@@ -1,6 +1,7 @@
 package com.mindhub.homebanking.service;
 
 import com.mindhub.homebanking.DTO.AccountDTO;
+import com.mindhub.homebanking.exceptions.AccountLimitException;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
@@ -35,10 +36,10 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    public void createAccount(Authentication authentication) throws Exception {
+    public void createAccount(Authentication authentication) throws AccountLimitException {
         Client client = clientRepository.findByEmail(authentication.getName()).get();
         if (client.getAccounts().stream().count() >= 3) {
-            throw new Exception("You have reached the account limit");
+            throw new AccountLimitException();
         }
         Account account = new Account(createNumber(), LocalDate.now(), 0.0);
         client.addAccount(account);

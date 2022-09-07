@@ -1,6 +1,7 @@
 package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.DTO.LoanApplicationDTO;
+import com.mindhub.homebanking.exceptions.InvalidParameterException;
 import com.mindhub.homebanking.service.abstraction.ILoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,11 +26,7 @@ public class LoanController {
 
     @PostMapping(value = "/loans")
     public ResponseEntity<?> loanApply(@RequestBody LoanApplicationDTO loanApplication,
-                                                   Authentication authentication) {
-        try {
+                                                   Authentication authentication) throws InvalidParameterException {
             return new ResponseEntity<>(loanService.loanApply(loanApplication, authentication), CREATED);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(e.getMessage(), FORBIDDEN);
-        }
     }
 }

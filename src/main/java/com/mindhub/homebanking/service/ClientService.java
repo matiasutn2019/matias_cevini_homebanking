@@ -1,6 +1,8 @@
 package com.mindhub.homebanking.service;
 
 import com.mindhub.homebanking.DTO.ClientDTO;
+import com.mindhub.homebanking.exceptions.EmailAlreadyExistException;
+import com.mindhub.homebanking.exceptions.InvalidCredentialsException;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
@@ -43,7 +45,7 @@ public class ClientService implements IClientService {
     }
 
     @Override
-    public void register(String firstName, String lastName, String email, String password) throws IllegalArgumentException {
+    public void register(String firstName, String lastName, String email, String password) throws EmailAlreadyExistException, InvalidCredentialsException {
         Optional<Client> clientInDDBB = clientRepository.findByEmail(email);
         validate(firstName, lastName, email, password, clientInDDBB);
         Client client = new Client(firstName, lastName, email, passwordEncoder.encode(password));
@@ -80,12 +82,12 @@ public class ClientService implements IClientService {
     }
 
     private void validate(String firstName, String lastName, String email, String password,
-                          Optional<Client> clientInDDBB) throws IllegalArgumentException {
+                          Optional<Client> clientInDDBB) throws EmailAlreadyExistException, InvalidCredentialsException {
         if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty()) {
-            throw new IllegalArgumentException("Invalid parameters");
+            throw new InvalidCredentialsException();
         }
         if (clientInDDBB.isPresent()) {
-            throw new IllegalArgumentException("Email already registered");
+            throw new EmailAlreadyExistException();
         }
     }
 }

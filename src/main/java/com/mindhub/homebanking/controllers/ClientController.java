@@ -1,6 +1,8 @@
 package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.DTO.ClientDTO;
+import com.mindhub.homebanking.exceptions.EmailAlreadyExistException;
+import com.mindhub.homebanking.exceptions.InvalidCredentialsException;
 import com.mindhub.homebanking.service.abstraction.IClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -35,13 +37,10 @@ public class ClientController {
 
     @PostMapping(path = "/clients")
     public ResponseEntity<?> register(@RequestParam String firstName, @RequestParam String lastName,
-                                  @RequestParam String email, @RequestParam String password) throws IllegalArgumentException {
-        try {
+                                  @RequestParam String email, @RequestParam String password)
+            throws EmailAlreadyExistException, InvalidCredentialsException {
             clientService.register(firstName, lastName, email, password);
             return new ResponseEntity<>(CREATED);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(e.getMessage(), FORBIDDEN);
-        }
     }
 
     @DeleteMapping(value = "/clients/{id}")

@@ -1,5 +1,6 @@
 package com.mindhub.homebanking.service;
 
+import com.mindhub.homebanking.exceptions.InvalidParameterException;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.models.Transaction;
@@ -30,8 +31,8 @@ public class TransactionService implements ITransactionService {
 
     @Transactional
     @Override
-    public void transaction(Double amount, String description, String accountOriginNumber,
-                            String accountDestinationNumber, Authentication authentication) throws IllegalArgumentException {
+    public void handleTransaction(Double amount, String description, String accountOriginNumber,
+                            String accountDestinationNumber, Authentication authentication) throws InvalidParameterException {
         Client client = clientRepository.findByEmail(authentication.getName()).get();
         Account accountOrigin = accountRepository.findByNumber(accountOriginNumber).orElse(null);
         Account accountDestination = accountRepository.findByNumber(accountDestinationNumber).orElse(null);
@@ -41,32 +42,32 @@ public class TransactionService implements ITransactionService {
     }
 
     private void validation(Client client, Account accountOrigin, Account accountDestination, Double amount,
-                              String description, String accountOriginNumber, String accountDestinationNumber) throws IllegalArgumentException {
+                              String description, String accountOriginNumber, String accountDestinationNumber) throws InvalidParameterException {
         if (amount.toString().isEmpty() || description.isEmpty() || accountOriginNumber.isEmpty() || accountDestinationNumber.isEmpty()) {
-            throw new IllegalArgumentException("One or more of the parameters is empty");
+            throw new InvalidParameterException("One or more of the parameters is empty");
             //Verificar que los parámetros no estén vacíos
         }
         if (amount.isNaN() || amount <= 0) {
-            throw new IllegalArgumentException("The parameter amount insn't a number or is <= 0");
+            throw new InvalidParameterException("The parameter amount insn't a number or is <= 0");
         }
         if (accountOriginNumber.equals(accountDestinationNumber)) {
-            throw new IllegalArgumentException("Equal card numbers");
+            throw new InvalidParameterException("Equal card numbers");
             //Verificar que los números de cuenta no sean iguales
         }
         if (accountOrigin == null) {
-            throw new IllegalArgumentException("Origin account doesn't exist");
+            throw new InvalidParameterException("Origin account doesn't exist");
             //Verificar que exista la cuenta de origen
         }
         if (!client.getAccounts().contains(accountOrigin)) {
-            throw new IllegalArgumentException("Origin account doesn't belong to authenticated client");
+            throw new InvalidParameterException("Origin account doesn't belong to authenticated client");
             //Verificar que la cuenta de origen pertenezca al cliente autenticado
         }
         if (accountDestination == null) {
-            throw new IllegalArgumentException("Destination account doesn't exist");
+            throw new InvalidParameterException("Destination account doesn't exist");
             //Verificar que exista la cuenta de destino
         }
         if (accountOrigin.getBalance() < amount) {
-            throw new IllegalArgumentException("Origin account's balance not enough");
+            throw new InvalidParameterException("Origin account's balance not enough");
             //Verificar que la cuenta de origen tenga el monto disponible
         }
     }

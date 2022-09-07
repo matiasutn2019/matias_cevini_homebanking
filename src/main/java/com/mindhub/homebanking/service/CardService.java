@@ -1,6 +1,8 @@
 package com.mindhub.homebanking.service;
 
 import com.mindhub.homebanking.DTO.CardDTO;
+import com.mindhub.homebanking.exceptions.CardColorException;
+import com.mindhub.homebanking.exceptions.CardTypeException;
 import com.mindhub.homebanking.models.Card;
 import com.mindhub.homebanking.models.CardColor;
 import com.mindhub.homebanking.models.CardType;
@@ -28,7 +30,7 @@ public class CardService implements ICardService {
     private ClientRepository clientRepository;
 
     @Override
-    public void createCard(String cardType, String cardColor, Authentication authentication) throws Exception {
+    public void createCard(String cardType, String cardColor, Authentication authentication) throws CardTypeException, CardColorException {
         Client client = clientRepository.findByEmail(authentication.getName()).get();
         validateCardLimit(client.getCards(), cardType, cardColor);
         Card card = newCard(cardType, cardColor, client);
@@ -48,12 +50,12 @@ public class CardService implements ICardService {
                 client.getFirstName() + client.getLastName(), CardColor.valueOf(cardColor));
     }
 
-    private void validateCardLimit(Set<Card> cards, String type, String color) throws Exception {
+    private void validateCardLimit(Set<Card> cards, String type, String color) throws CardTypeException, CardColorException {
         List<Card> filteredCards = cards.stream().filter(x -> x.getType().toString().equals(type)).collect(toList());
         if (filteredCards.size() >= 3) {
-            throw new Exception("You have reached the card limit of type " + type);
+            throw new CardTypeException();
         } else if (filteredCards.stream().anyMatch(x -> x.getColor().toString().equals(color))) {
-            throw new Exception("You already have a card of color " + color);
+            throw new CardColorException();
         }
     }
 

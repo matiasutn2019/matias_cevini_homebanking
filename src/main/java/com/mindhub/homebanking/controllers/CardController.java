@@ -1,6 +1,8 @@
 package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.DTO.CardDTO;
+import com.mindhub.homebanking.exceptions.CardColorException;
+import com.mindhub.homebanking.exceptions.CardTypeException;
 import com.mindhub.homebanking.service.abstraction.ICardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +22,9 @@ public class CardController {
 
     @PostMapping(value = "/clients/current/cards")
     public ResponseEntity<?> createCard(@RequestParam String cardType, @RequestParam String cardColor,
-                                             Authentication authentication) throws Exception {
-        try {
+                                             Authentication authentication) throws CardTypeException, CardColorException {
             cardService.createCard(cardType, cardColor, authentication);
             return new ResponseEntity<>(CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), FORBIDDEN);
-        }
     }
 
     @GetMapping(value = "/clients/current/cards")

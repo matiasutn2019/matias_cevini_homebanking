@@ -30,12 +30,8 @@ public class AccountController {
 
     @PostMapping(value = "/clients/current/accounts")
     public ResponseEntity<?> createAccount(Authentication authentication) throws Exception {
-        try {
             accountService.createAccount(authentication);
             return new ResponseEntity<>(CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), FORBIDDEN);
-        }
     }
 
     @GetMapping(value = "/clients/current/accounts")

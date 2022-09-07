@@ -1,10 +1,11 @@
 package com.mindhub.homebanking.service.abstraction;
 
+import com.mindhub.homebanking.exceptions.InvalidParameterException;
 import org.springframework.security.core.Authentication;
 
 public interface ITransactionService {
 
-    void transaction(Double amount, String description,
+    void handleTransaction(Double amount, String description,
                      String accountOriginNumber, String accountDestinationNumber,
-                     Authentication authentication) throws IllegalArgumentException;
+                     Authentication authentication) throws InvalidParameterException;
 }
