@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -32,6 +33,7 @@ public class CardService implements ICardService {
     @Override
     public void createCard(String cardType, String cardColor, Authentication authentication) throws CardTypeException, CardColorException {
         Client client = clientRepository.findByEmail(authentication.getName()).get();
+        validateTypeAndColor(cardType, cardColor);
         validateCardLimit(client.getCards(), cardType, cardColor);
         Card card = newCard(cardType, cardColor, client);
         client.addCard(card);
@@ -50,12 +52,21 @@ public class CardService implements ICardService {
                 client.getFirstName() + client.getLastName(), CardColor.valueOf(cardColor));
     }
 
+    private void validateTypeAndColor(String cardType, String cardColor) throws CardTypeException, CardColorException {
+        if (Arrays.stream(CardType.values()).noneMatch(c -> c.toString().equals(cardType))) {
+            throw new CardTypeException("Invalid Card type.");
+        }
+        if (Arrays.stream(CardColor.values()).noneMatch(c -> c.toString().equals(cardColor))) {
+            throw new CardColorException("Invalid Card color.");
+        }
+    }
+
     private void validateCardLimit(Set<Card> cards, String type, String color) throws CardTypeException, CardColorException {
         List<Card> filteredCards = cards.stream().filter(x -> x.getType().toString().equals(type)).collect(toList());
         if (filteredCards.size() >= 3) {
-            throw new CardTypeException();
+            throw new CardTypeException("You have reached the card limit of this type.");
         } else if (filteredCards.stream().anyMatch(x -> x.getColor().toString().equals(color))) {
-            throw new CardColorException();
+            throw new CardColorException("You already have a card of this color.");
         }
     }
 
