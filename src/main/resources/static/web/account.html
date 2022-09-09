@@ -56,10 +56,11 @@
                 <thead>
                     <tr>
                         <th scope="col" class="col-1 txt-shadow-2">ID</th>
-                        <th scope="col" class="col-2 txt-shadow-2">Type: </th>
-                        <th scope="col" class="col-3 txt-shadow-2">Date: </th>
-                        <th scope="col" class="col-2 txt-shadow-2">Amount: </th>
-                        <th scope="col" class="col-4 txt-shadow-2">Description: </th>
+                        <th scope="col" class="col-1 txt-shadow-2">Type</th>
+                        <th scope="col" class="col-2 txt-shadow-2">Date</th>
+                        <th scope="col" class="col-2 txt-shadow-2">Amount</th>
+                        <th scope="col" class="col-4 txt-shadow-2">Description</th>
+                        <th scope="col" class="col-2 txt-shadow-2">Account balance</th>
                     </tr>
                 </thead>
                 <tbody id="">
@@ -70,6 +71,7 @@
                         <td class="text-white">{{transaction.date}}</td>
                         <td class="text-white">$ {{transaction.amount}}</td>
                         <td class="text-white">{{transaction.description}}</td>
+                        <td class="text-white">{{transaction.accountBalance}}</td>
                     </tr>
                 </tbody>
             </table>

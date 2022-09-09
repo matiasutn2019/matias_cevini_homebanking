@@ -50,12 +50,12 @@ public class LoanService implements ILoanService {
     }
 
     private ClientLoan createClientLoan(LoanApplicationDTO loanApplication, Client client, Loan loan, Account account) {
-        Double amountPlusTax = loanApplication.getAmount() + (loanApplication.getAmount() * 0.2);
+        Double amountPlusTax = calculateTax(loanApplication.getAmount());
         ClientLoan clientLoan = new ClientLoan(amountPlusTax, loanApplication.getPayments(), client, loan);
         //Se debe crear una solicitud de préstamo con el monto solicitado sumando el 20% del mismo
 
         Transaction transaction = new Transaction(CREDIT, LocalDate.now(), loanApplication.getAmount(),
-                loan.getName() + " loan approved");
+                loan.getName() + " loan approved", getAccountBalance(account, loanApplication.getAmount()));
         account.addTransaction(transaction);
         //Se debe crear una transacción “CREDIT” asociada a la cuenta de destino (el monto debe quedar positivo)
         //con la descripción concatenando el nombre del préstamo y la frase “loan approved”
@@ -67,6 +67,14 @@ public class LoanService implements ILoanService {
         transactionRepository.save(transaction);
 
         return clientLoan;
+    }
+
+    private double calculateTax(Double amount) {
+        return amount + (amount * 0.2);
+    }
+
+    private double getAccountBalance(Account account, Double amountTransaction) {
+        return account.getBalance() + amountTransaction;
     }
 
     private void validations(LoanApplicationDTO loanApplication, Loan loan,

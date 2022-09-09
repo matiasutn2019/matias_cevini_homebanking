@@ -17,6 +17,8 @@ public class TransactionDTO {
 
     private String description;
 
+    private Double accountBalance;
+
     public TransactionDTO() {
     }
 
@@ -26,6 +28,7 @@ public class TransactionDTO {
         this.date = transaction.getDate();
         this.amount = transaction.getAmount();
         this.description = transaction.getDescription();
+        this.accountBalance = transaction.getAccountBalance();
     }
 
     public Long getId() {
@@ -46,5 +49,9 @@ public class TransactionDTO {
 
     public String getDescription() {
         return description;
+    }
+
+    public Double getAccountBalance() {
+        return accountBalance;
     }
 }

@@ -36,13 +36,13 @@ public class HomebankingApplication {
             cliente1.addAccount(cuenta1);
             cliente1.addAccount(cuenta2);
             Transaction t1 = new Transaction(TransactionType.CREDIT, LocalDate.now(),
-                    1000.0, "crédito de $ 1000 a la cuenta 1");
+                    1000.0, "crédito de $ 1000 a la cuenta 1", 6000.0);
             Transaction t2 = new Transaction(TransactionType.DEBIT, LocalDate.now(),
-                    -500.0, "débito de $ 500 a la cuenta 1");
+                    -500.0, "débito de $ 500 a la cuenta 1", 5500.0);
             Transaction t3 = new Transaction(TransactionType.CREDIT, LocalDate.now(),
-                    1000.0, "crédito de $ 1000 a la cuenta 2");
+                    1000.0, "crédito de $ 1000 a la cuenta 2", 8500.0);
             Transaction t4 = new Transaction(TransactionType.DEBIT, LocalDate.now(),
-                    -500.0, "débito de $ 500 a la cuenta 2");
+                    -500.0, "débito de $ 500 a la cuenta 2", 8000.0);
             cuenta1.addTransaction(t1);
             cuenta1.addTransaction(t2);
             cuenta2.addTransaction(t3);
@@ -61,13 +61,13 @@ public class HomebankingApplication {
             cliente2.addAccount(cuenta3);
             cliente2.addAccount(cuenta4);
             Transaction t5 = new Transaction(TransactionType.CREDIT, LocalDate.now(),
-                    1000.0, "crédito de $ 1000 a la cuenta 3");
+                    1000.0, "crédito de $ 1000 a la cuenta 3", 0.0);
             Transaction t6 = new Transaction(TransactionType.DEBIT, LocalDate.now(),
-                    -500.0, "débito de $ 500 a la cuenta 3");
+                    -500.0, "débito de $ 500 a la cuenta 3", 0.0);
             Transaction t7 = new Transaction(TransactionType.CREDIT, LocalDate.now(),
-                    1000.0, "crédito de $ 1000 a la cuenta 4");
+                    1000.0, "crédito de $ 1000 a la cuenta 4", 0.0);
             Transaction t8 = new Transaction(TransactionType.DEBIT, LocalDate.now(),
-                    -500.0, "débito de $ 500 a la cuenta 4");
+                    -500.0, "débito de $ 500 a la cuenta 4", 0.0);
             cuenta3.addTransaction(t5);
             cuenta3.addTransaction(t6);
             cuenta4.addTransaction(t7);

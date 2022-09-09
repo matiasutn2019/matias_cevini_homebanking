@@ -32,7 +32,8 @@ public class TransactionService implements ITransactionService {
     @Transactional
     @Override
     public void handleTransaction(Double amount, String description, String accountOriginNumber,
-                            String accountDestinationNumber, Authentication authentication) throws InvalidParameterException {
+                            String accountDestinationNumber, Authentication authentication)
+            throws InvalidParameterException {
         Client client = clientRepository.findByEmail(authentication.getName()).get();
         Account accountOrigin = accountRepository.findByNumber(accountOriginNumber).orElse(null);
         Account accountDestination = accountRepository.findByNumber(accountDestinationNumber).orElse(null);
@@ -42,7 +43,8 @@ public class TransactionService implements ITransactionService {
     }
 
     private void validation(Client client, Account accountOrigin, Account accountDestination, Double amount,
-                              String description, String accountOriginNumber, String accountDestinationNumber) throws InvalidParameterException {
+                              String description, String accountOriginNumber, String accountDestinationNumber)
+            throws InvalidParameterException {
         if (amount.toString().isEmpty() || description.isEmpty() || accountOriginNumber.isEmpty() || accountDestinationNumber.isEmpty()) {
             throw new InvalidParameterException("One or more of the parameters is empty");
             //Verificar que los parámetros no estén vacíos
@@ -72,10 +74,17 @@ public class TransactionService implements ITransactionService {
         }
     }
 
-    private void makeTransaction(Double amount, String description, Account account, TransactionType type, String numberOtherAccount) {
-        Transaction transaction = new Transaction(type, LocalDate.now(), amount, description + " " + numberOtherAccount);
+    private void makeTransaction(Double amount, String description, Account account,
+                                 TransactionType type, String numberOtherAccount) {
+        Transaction transaction =
+                new Transaction(type, LocalDate.now(), amount,
+                        description + " " + numberOtherAccount, getAccountBalance(account, amount));
         account.setBalance(account.getBalance() + amount);
         account.addTransaction(transaction);
         transactionRepository.save(transaction);
+    }
+
+    private double getAccountBalance(Account account, Double amountTransaction) {
+        return account.getBalance() + amountTransaction;
     }
 }
