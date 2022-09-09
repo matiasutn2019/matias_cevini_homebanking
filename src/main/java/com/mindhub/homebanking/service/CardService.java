@@ -3,6 +3,7 @@ package com.mindhub.homebanking.service;
 import com.mindhub.homebanking.DTO.CardDTO;
 import com.mindhub.homebanking.exceptions.CardColorException;
 import com.mindhub.homebanking.exceptions.CardTypeException;
+import com.mindhub.homebanking.exceptions.InvalidParameterException;
 import com.mindhub.homebanking.models.Card;
 import com.mindhub.homebanking.models.CardColor;
 import com.mindhub.homebanking.models.CardType;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -43,11 +45,38 @@ public class CardService implements ICardService {
     @Override
     public List<CardDTO> getCards(Authentication authentication) {
         Client client = clientRepository.findByEmail(authentication.getName()).get();
-        return client.getCards().stream().map(CardDTO::new).collect(toList());
+        // return client.getCards().stream().map(CardDTO::new).collect(toList());
+        return client.getCards().stream()
+                .filter(card -> card.getSoftDelete().equals(false))
+                .map(CardDTO::new).collect(toList());
+    }
+
+    @Override
+    public void deleteCard(String number, Authentication authentication) throws InvalidParameterException {
+        Client client = clientRepository.findByEmail(authentication.getName()).get();
+        validateCardNumber(number);
+        Card card = cardRepository.findByNumber(number).get();
+        if (card == null) {
+            throw new EntityNotFoundException("There's no Card with that number.");
+        }
+        if (client.getCards().stream().noneMatch(c -> c.getNumber().equals(number))) {
+            throw new InvalidParameterException("The card number does not belong to the client");
+        }
+        card.setSoftDelete(true);
+        cardRepository.save(card);
+    }
+
+    private void validateCardNumber(String number) throws InvalidParameterException {
+        if (number.isEmpty()) {
+            throw new InvalidParameterException("Card number is empty");
+        }
+        if (number.length() <= 18 || number.length() >= 20 ) {
+            throw new InvalidParameterException("Invalid Card number length");
+        }
     }
 
     private Card newCard(String cardType, String cardColor, Client client) {
-        return new Card(CardType.valueOf(cardType), validateCardNumber(),
+        return new Card(CardType.valueOf(cardType), createCardNumber(),
                 CardUtils.getCVV(), LocalDate.now(), LocalDate.now().plusYears(5),
                 client.getFirstName() + client.getLastName(), CardColor.valueOf(cardColor));
     }
@@ -62,7 +91,10 @@ public class CardService implements ICardService {
     }
 
     private void validateCardLimit(Set<Card> cards, String type, String color) throws CardTypeException, CardColorException {
-        List<Card> filteredCards = cards.stream().filter(x -> x.getType().toString().equals(type)).collect(toList());
+        List<Card> filteredCards = cards.stream()
+                .filter(card -> card.getSoftDelete().equals(false))
+                .filter(card -> card.getType().toString().equals(type))
+                .collect(toList());
         if (filteredCards.size() >= 3) {
             throw new CardTypeException("You have reached the card limit of this type.");
         } else if (filteredCards.stream().anyMatch(x -> x.getColor().toString().equals(color))) {
@@ -70,7 +102,7 @@ public class CardService implements ICardService {
         }
     }
 
-    private String validateCardNumber() {
+    private String createCardNumber() {
         String cardNumber = "";
         do {
             cardNumber = CardUtils.getCardNumber();

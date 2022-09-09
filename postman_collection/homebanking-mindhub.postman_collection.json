@@ -33,12 +33,12 @@
 						},
 						{
 							"key": "accountOriginNumber",
-							"value": "VIN001",
+							"value": "VIN-001",
 							"type": "text"
 						},
 						{
 							"key": "accountDestinationNumber",
-							"value": "VIN002",
+							"value": "VIN-002",
 							"type": "text"
 						}
 					]
@@ -175,7 +175,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": 1,\r\n    \"amount\": 50000,\r\n    \"payments\": 36,\r\n    \"accountNumber\": \"VIN001\"\r\n}",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"amount\": 50000,\r\n    \"payments\": 36,\r\n    \"accountNumber\": \"VIN-001\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -247,6 +247,59 @@
 							"key": "password",
 							"value": "123"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete card",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "number",
+							"value": "0000 1111 2222 3333",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8080/api/clients/current/cards",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"clients",
+						"current",
+						"cards"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get cards de melba",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/clients/current/cards/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"clients",
+						"current",
+						"cards",
+						""
 					]
 				}
 			},

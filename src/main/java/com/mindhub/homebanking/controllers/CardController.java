@@ -3,6 +3,7 @@ package com.mindhub.homebanking.controllers;
 import com.mindhub.homebanking.DTO.CardDTO;
 import com.mindhub.homebanking.exceptions.CardColorException;
 import com.mindhub.homebanking.exceptions.CardTypeException;
+import com.mindhub.homebanking.exceptions.InvalidParameterException;
 import com.mindhub.homebanking.service.abstraction.ICardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,5 +31,11 @@ public class CardController {
     @GetMapping(value = "/clients/current/cards")
     public ResponseEntity<List<CardDTO>> cardList(Authentication authentication) {
         return new ResponseEntity<>(cardService.getCards(authentication), OK);
+    }
+
+    @PatchMapping(value = "/clients/current/cards")
+    public ResponseEntity<?> deleteCard(@RequestParam String number, Authentication authentication) throws InvalidParameterException {
+        cardService.deleteCard(number, authentication);
+        return new ResponseEntity<>(NO_CONTENT);
     }
 }

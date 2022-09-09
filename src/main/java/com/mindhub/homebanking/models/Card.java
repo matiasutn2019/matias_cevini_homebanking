@@ -19,6 +19,7 @@ public class Card {
     private LocalDate thruDate;
     private String cardHolder;
     private CardColor color;
+    private Boolean softDelete = false;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="client_id")
@@ -104,5 +105,17 @@ public class Card {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public void setThruDate(LocalDate thruDate) {
+        this.thruDate = thruDate;
+    }
+
+    public Boolean getSoftDelete() {
+        return softDelete;
+    }
+
+    public void setSoftDelete(Boolean softDelete) {
+        this.softDelete = softDelete;
     }
 }
