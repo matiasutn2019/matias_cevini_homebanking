@@ -20,6 +20,7 @@ import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import static java.util.stream.Collectors.toList;
@@ -52,18 +53,20 @@ public class CardService implements ICardService {
     }
 
     @Override
-    public void deleteCard(String number, Authentication authentication) throws InvalidParameterException {
+    public void deleteCard(String number, Authentication authentication)
+            throws InvalidParameterException {
         Client client = clientRepository.findByEmail(authentication.getName()).get();
         validateCardNumber(number);
-        Card card = cardRepository.findByNumber(number).get();
-        if (card == null) {
-            throw new EntityNotFoundException("There's no Card with that number.");
+        Optional<Card> card = client.getCards().stream().filter(c -> c.getNumber().equals(number)).findFirst();
+        validateCardExist(card);
+        card.get().setSoftDelete(true);
+        cardRepository.save(card.get());
+    }
+
+    private void validateCardExist(Optional card) throws InvalidParameterException {
+        if (card.isEmpty()) {
+            throw new InvalidParameterException("There's no Card with that number.");
         }
-        if (client.getCards().stream().noneMatch(c -> c.getNumber().equals(number))) {
-            throw new InvalidParameterException("The card number does not belong to the client");
-        }
-        card.setSoftDelete(true);
-        cardRepository.save(card);
     }
 
     private void validateCardNumber(String number) throws InvalidParameterException {

@@ -25,6 +25,8 @@ public class Transaction {
 
     private Double accountBalance;
 
+    private Boolean softDelete = false;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="account_id")
     private Account account;
@@ -93,5 +95,13 @@ public class Transaction {
 
     public void setAccountBalance(Double accountBalance) {
         this.accountBalance = accountBalance;
+    }
+
+    public Boolean getSoftDelete() {
+        return softDelete;
+    }
+
+    public void setSoftDelete(Boolean softDelete) {
+        this.softDelete = softDelete;
     }
 }

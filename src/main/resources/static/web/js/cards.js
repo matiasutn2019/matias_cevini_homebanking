@@ -59,9 +59,7 @@ createApp({
         },
 
         deleteCard() {
-            if (this.cardNumber == '' || isNaN(this.cardNumber)) {
-                swal('', 'Type the corresponding value', "warning")
-            } else {
+            
                 axios
                     .patch('/api/clients/current/cards', 'number=' + this.cardNumber,
                         { headers: { 'content-type': 'application/x-www-form-urlencoded' } })
@@ -76,9 +74,9 @@ createApp({
                         }
                     })
                     .catch(error => {
-                        swal('Code: ' + error.response.status, error.response.data, "error")
+                        swal('Code: ' + error.response.data.code, error.response.data.message, "error")
                     })
-            }
+            
         },
 
         deleteButton() {

@@ -24,6 +24,8 @@ public class Account {
 
     private Double balance;
 
+    private Boolean softDelete = false;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="client_id")
     private Client client;
@@ -97,5 +99,13 @@ public class Account {
     @Override
     public int hashCode() {
         return Objects.hash(id, number, client);
+    }
+
+    public Boolean getSoftDelete() {
+        return softDelete;
+    }
+
+    public void setSoftDelete(Boolean softDelete) {
+        this.softDelete = softDelete;
     }
 }

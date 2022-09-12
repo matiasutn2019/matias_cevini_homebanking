@@ -1,6 +1,7 @@
 package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.DTO.AccountDTO;
+import com.mindhub.homebanking.exceptions.InvalidParameterException;
 import com.mindhub.homebanking.service.abstraction.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,5 +38,11 @@ public class AccountController {
     @GetMapping(value = "/clients/current/accounts")
     public ResponseEntity<List<AccountDTO>> clientAccounts(Authentication authentication) {
         return new ResponseEntity<>(accountService.getAccounts(authentication), OK);
+    }
+
+    @PatchMapping(value = "/clients/current/accounts")
+    public ResponseEntity<?> deleteAccount(@RequestParam String number, Authentication authentication) throws InvalidParameterException {
+        accountService.deleteAccount(number, authentication);
+        return new ResponseEntity<>(NO_CONTENT);
     }
 }
