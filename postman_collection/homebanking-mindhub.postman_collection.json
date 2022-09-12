@@ -304,6 +304,58 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "delete account",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "number",
+							"value": "VIN-001",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8080/api/clients/current/accounts",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"clients",
+						"current",
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get accounts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/clients/current/accounts",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"clients",
+						"current",
+						"accounts"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
