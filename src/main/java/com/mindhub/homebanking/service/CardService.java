@@ -46,7 +46,6 @@ public class CardService implements ICardService {
     @Override
     public List<CardDTO> getCards(Authentication authentication) {
         Client client = clientRepository.findByEmail(authentication.getName()).get();
-        // return client.getCards().stream().map(CardDTO::new).collect(toList());
         return client.getCards().stream()
                 .filter(card -> card.getSoftDelete().equals(false))
                 .map(CardDTO::new).collect(toList());

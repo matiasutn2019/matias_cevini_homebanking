@@ -61,6 +61,25 @@ createApp({
                 }
                 return 1;
             });
+        },
+
+        deleteAccount(number) {
+            axios
+                .patch('/api/clients/current/accounts', 'number=' + number,
+                    { headers: { 'content-type': 'application/x-www-form-urlencoded' } })
+                .then(res => {
+                    if (res.status === 204) {
+                        swal('', 'Account deleted!', "success")
+                            .then((ok) => {
+                                if (ok) {
+                                    window.location.reload()
+                                }
+                            })
+                    }
+                })
+                .catch(error => {
+                    swal('Code: ' + error.response.data.code, error.response.data.message, "error")
+                })
         }
     }
 }).mount('#app')

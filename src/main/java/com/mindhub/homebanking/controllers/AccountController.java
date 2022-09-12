@@ -20,7 +20,7 @@ public class AccountController {
     private IAccountService accountService;
 
     @GetMapping(value = "/accounts")
-    public ResponseEntity<List<AccountDTO>> accountDTOList() {
+    public ResponseEntity<List<AccountDTO>> accountDTOList(Authentication authentication) {
         return new ResponseEntity<>(accountService.accountList(), OK);
     }
 
@@ -30,7 +30,7 @@ public class AccountController {
     }
 
     @PostMapping(value = "/clients/current/accounts")
-    public ResponseEntity<?> createAccount(Authentication authentication) throws Exception {
+    public ResponseEntity<?> createAccount(Authentication authentication) {
             accountService.createAccount(authentication);
             return new ResponseEntity<>(CREATED);
     }

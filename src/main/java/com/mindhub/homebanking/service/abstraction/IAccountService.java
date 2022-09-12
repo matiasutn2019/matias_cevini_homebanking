@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface IAccountService {
 
-    List<AccountDTO> accountList();
+    List<AccountDTO> accountList(Authentication authentication);
     AccountDTO getById(Long id);
     void createAccount(Authentication authentication) throws AccountLimitException;
 

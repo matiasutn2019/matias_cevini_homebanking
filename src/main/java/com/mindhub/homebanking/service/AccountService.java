@@ -8,7 +8,6 @@ import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.models.Transaction;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
-import com.mindhub.homebanking.service.abstraction.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -30,8 +29,11 @@ public class AccountService implements IAccountService {
     private ClientRepository clientRepository;
 
     @Override
-    public List<AccountDTO> accountList() {
-        return accountRepository.findAll().stream().map(AccountDTO::new).collect(toList());
+    public List<AccountDTO> accountList(Authentication authentication) {
+        Client client = clientRepository.findByEmail(authentication.getName()).get();
+        return client.getAccounts().stream()
+                .filter(account -> account.getSoftDelete().equals(false))
+                .map(AccountDTO::new).collect(toList());
     }
 
     @Override

@@ -56,10 +56,11 @@
                 <thead>
                     <tr>
                         <th scope="col" class="col-1 txt-shadow-2">ID</th>
-                        <th scope="col" class="col-3 txt-shadow-2">Number</th>
-                        <th scope="col" class="col-3 txt-shadow-2">Creation Time</th>
-                        <th scope="col" class="col-3 txt-shadow-2">Balance</th>
-                        <th scope="col" class="col-3 txt-shadow-2">Transactions</th>
+                        <th scope="col" class="col-2 txt-shadow-2">Number</th>
+                        <th scope="col" class="col-2 txt-shadow-2">Creation Time</th>
+                        <th scope="col" class="col-2 txt-shadow-2">Balance</th>
+                        <th scope="col" class="col-2 txt-shadow-2">Transactions</th>
+                        <th scope="col" class="col-2 txt-shadow-2">Delete</th>
                     </tr>
                 </thead>
                 <tbody id="">
@@ -74,6 +75,11 @@
                                     See transactions
                                 </button>
                             </a>
+                        </td>
+                        <!-- Button delete -->
+                        <td>
+                            <i class="fas fa-trash fa-2x icon-dark link-delete" style="color: red;"
+                                @click="deleteClient(account.number)"></i>
                         </td>
                     </tr>
                 </tbody>
