@@ -18,6 +18,7 @@ createApp({
 
     created() {
         this.loadData();
+        this.loadAccounts();
     },
 
     methods: {
@@ -38,7 +39,17 @@ createApp({
                 .then(res => {
                     this.response = res;
                     this.client = this.response.data;
-                    this.accounts = this.client.accountsDTO;
+                })
+                .catch(error => {
+                    swal('Code: ' + error.response.status, error.response.data, "error");
+                })
+        },
+
+        loadAccounts() {
+            axios
+                .get('/api/clients/current/accounts')
+                .then(res => {
+                    this.accounts = res.data
                 })
                 .catch(error => {
                     swal('Code: ' + error.response.status, error.response.data, "error");

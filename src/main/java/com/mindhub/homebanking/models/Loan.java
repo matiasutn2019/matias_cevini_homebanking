@@ -21,6 +21,8 @@ public class Loan {
     private String name;
     private Double maxAmount;
 
+    private Double percentage;
+
     @ElementCollection
     @Column(name="payments")
     private List<Integer> payments = new ArrayList<>();
@@ -31,10 +33,11 @@ public class Loan {
     public Loan() {
     }
 
-    public Loan(String name, Double maxAmount, List<Integer> payments) {
+    public Loan(String name, Double maxAmount, Double percentage, List<Integer> payments) {
         this.name = name;
         this.maxAmount = maxAmount;
         this.payments = payments;
+        this.percentage = percentage;
     }
 
     public Long getId() {
@@ -86,4 +89,13 @@ public class Loan {
         Loan loan = (Loan) o;
         return id.equals(loan.id) && name.equals(loan.name);
     }
+
+    public Double getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage(Double percentage) {
+        this.percentage = percentage;
+    }
 }
+

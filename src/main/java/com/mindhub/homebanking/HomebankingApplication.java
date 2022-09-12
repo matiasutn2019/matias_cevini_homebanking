@@ -80,9 +80,9 @@ public class HomebankingApplication {
             transactionRepository.save(t7);
             transactionRepository.save(t8);
 
-            Loan l1 = new Loan("HIPOTECARIO", 500000.0, List.of(12,24,36,48,60));
-            Loan l2 = new Loan("PERSONAL", 100000.0, List.of(6,12,24));
-            Loan l3 = new Loan("AUTOMOTRIZ", 300000.0, List.of(6,12,24,36));
+            Loan l1 = new Loan("HIPOTECARIO", 500000.0, 10.0, List.of(12,24,36,48,60));
+            Loan l2 = new Loan("PERSONAL", 100000.0, 20.0, List.of(6,12,24));
+            Loan l3 = new Loan("AUTOMOTRIZ", 300000.0, 30.0, List.of(6,12,24,36));
             loanRepository.save(l1);
             loanRepository.save(l2);
             loanRepository.save(l3);

@@ -13,6 +13,7 @@ createApp({
             amountSelected: '',
             paymentAmount: '',
             loanId: '',
+            percentage: '',
         }
     },
 
@@ -72,7 +73,8 @@ createApp({
                                         id: this.loanId[0],
                                         amount: this.amountSelected,
                                         payments: this.paymentSelected,
-                                        accountNumber: this.accountDestination
+                                        accountNumber: this.accountDestination,
+                                        percentage: this.percentage
                                     },
                                     {
                                         headers: { 'content-type': 'application/json' }
@@ -114,7 +116,7 @@ createApp({
                 .filter(x => x.name == this.loanSelected)
                 .map(x => x.payments);
             if (this.paymentSelected != '') {
-                this.paymentAmount = (parseInt(this.amountSelected) + parseInt(this.amountSelected) * 0.2)
+                this.paymentAmount = (parseInt(this.amountSelected) + ((parseInt(this.amountSelected) / 100 * parseInt(this.percentage))))
                     / parseInt(this.paymentSelected)
             } else {
                 this.paymentAmount = 0
@@ -135,6 +137,12 @@ createApp({
                 swal('', 'The amount can not be zero', "error");
                 this.amountSelected = '';
             }
+        },
+
+        getPercentage() {
+            this.percentage = this.loans.filter(loan => loan.name == this.loanSelected).map(loan => loan.percentage)[0]
+            console.log('percentage '+this.percentage)
+            console.log('payment '+this.paymentAmount)
         }
     }
 
