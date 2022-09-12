@@ -24,6 +24,8 @@ public class Account {
 
     private Double balance;
 
+    private AccountType accountType;
+
     private Boolean softDelete = false;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -36,10 +38,11 @@ public class Account {
     public Account() {
     }
 
-    public Account(String number, LocalDate creationTime, Double balance) {
+    public Account(String number, LocalDate creationTime, Double balance, AccountType accountType) {
         this.number = number;
         this.creationTime = creationTime;
         this.balance = balance;
+        this.accountType = accountType;
     }
 
     public Long getId() {
@@ -107,5 +110,13 @@ public class Account {
 
     public void setSoftDelete(Boolean softDelete) {
         this.softDelete = softDelete;
+    }
+
+    public AccountType getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(AccountType accountType) {
+        this.accountType = accountType;
     }
 }

@@ -4,6 +4,7 @@ import com.mindhub.homebanking.DTO.AccountDTO;
 import com.mindhub.homebanking.exceptions.AccountLimitException;
 import com.mindhub.homebanking.exceptions.InvalidParameterException;
 import com.mindhub.homebanking.models.Account;
+import com.mindhub.homebanking.models.AccountType;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.models.Transaction;
 import com.mindhub.homebanking.repositories.AccountRepository;
@@ -14,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -40,10 +42,10 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    public void createAccount(Authentication authentication) throws AccountLimitException {
+    public void createAccount(Authentication authentication, AccountType accountType) throws AccountLimitException {
         Client client = clientRepository.findByEmail(authentication.getName()).get();
         validateAccountLimit(client);
-        Account account = new Account(createNumber(), LocalDate.now(), 0.0);
+        Account account = new Account(createNumber(), LocalDate.now(), 0.0, accountType);
         client.addAccount(account);
         accountRepository.save(account);
     }
@@ -65,6 +67,11 @@ public class AccountService implements IAccountService {
         account.get().setSoftDelete(true);
         deleteTransactions(account.get());
         accountRepository.save(account.get());
+    }
+
+    @Override
+    public List<String> getTypes() {
+        return AccountType.stream().map(type ->type.getAccountType()).collect(toList());
     }
 
     private String getRandom(int size) {

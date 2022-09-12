@@ -6,12 +6,15 @@ createApp({
             response: [],
             client: [],
             accounts: [],
+            accountTypes: [],
+            accountTypeSelected: ''
         }
     },
 
     created() {
         this.loadData();
         this.loadAccounts();
+        this.loadAccountTypes();
     },
 
     methods: {
@@ -40,6 +43,14 @@ createApp({
                 })
         },
 
+        loadAccountTypes() {
+            axios
+                .get('/api/clients/current/accounts/types')
+                .then(res => {
+                    this.accountTypes = res.data
+                })
+        },
+
         signout() {
             axios
                 .post('/api/logout')
@@ -52,7 +63,7 @@ createApp({
 
         createAccount() {
             axios
-                .post('/api/clients/current/accounts')
+                .post('/api/clients/current/accounts', 'accountType=' + this.accountTypeSelected)
                 .then(res => {
                     window.location.reload();
                 })

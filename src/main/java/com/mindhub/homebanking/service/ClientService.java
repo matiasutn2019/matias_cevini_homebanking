@@ -4,6 +4,7 @@ import com.mindhub.homebanking.DTO.ClientDTO;
 import com.mindhub.homebanking.exceptions.EmailAlreadyExistException;
 import com.mindhub.homebanking.exceptions.InvalidCredentialsException;
 import com.mindhub.homebanking.models.Account;
+import com.mindhub.homebanking.models.AccountType;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
@@ -59,7 +60,7 @@ public class ClientService implements IClientService {
     }
 
     private void newAccount(Client client) {
-        Account account = new Account(createNumber(), LocalDate.now(), 0.0);
+        Account account = new Account(createNumber(), LocalDate.now(), 0.0, AccountType.CORRIENTE);
         client.addAccount(account);
         accountRepository.save(account);
     }

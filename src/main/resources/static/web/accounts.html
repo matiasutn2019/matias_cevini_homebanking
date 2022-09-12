@@ -60,7 +60,8 @@
                         <th scope="col" class="col-2 txt-shadow-2">Creation Time</th>
                         <th scope="col" class="col-2 txt-shadow-2">Balance</th>
                         <th scope="col" class="col-2 txt-shadow-2">Transactions</th>
-                        <th scope="col" class="col-2 txt-shadow-2">Delete</th>
+                        <th scope="col" class="col-2 txt-shadow-2">Type</th>
+                        <th scope="col" class="col-1 txt-shadow-2">Delete</th>
                     </tr>
                 </thead>
                 <tbody id="">
@@ -69,6 +70,7 @@
                         <td class="text-white">{{account.number}}</td>
                         <td class="text-white">{{account.creationTime}}</td>
                         <td class="text-white">$ {{account.balance}}</td>
+                        <td class="text-white">{{account.accountType}}</td>
                         <td>
                             <a :href="'./account.html?id=' + account.id" class="text-white text-decoration-none">
                                 <button type="submit" class="btn btn-secondary">
@@ -86,8 +88,37 @@
             </table>
         </div>
         <template v-if="accounts.length < 3">
-            <button type="button" class="btn btn-secondary" @click="createAccount">Create a new Account</button>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">
+                New Account
+            </button>
         </template>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Account type</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <select id="select2" class="form-select" v-model="accountTypeSelected">
+                            <template v-for="type in accountTypes">
+                                <option :value="type">{{type}}</option>
+                            </template>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" @click="createAccount">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
 
         <template v-if="client.loans">
             <h2 class="pt-5 txt-shadow">Loans List</h2>

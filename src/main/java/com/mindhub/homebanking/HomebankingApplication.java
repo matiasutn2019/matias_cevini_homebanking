@@ -31,8 +31,8 @@ public class HomebankingApplication {
 									  CardRepository cardRepository) {
         return (args) -> {
             Client cliente1 = new Client("Lorenzo", "Melba", "melba@gmail.com", passwordEncoder.encode("pass123"));
-            Account cuenta1 = new Account("VIN-001", LocalDate.now(), 5000.0);
-            Account cuenta2 = new Account("VIN-002", LocalDate.now().plusDays(1l), 7500.0);
+            Account cuenta1 = new Account("VIN-001", LocalDate.now(), 5000.0, AccountType.AHORRO);
+            Account cuenta2 = new Account("VIN-002", LocalDate.now().plusDays(1l), 7500.0, AccountType.CORRIENTE);
             cliente1.addAccount(cuenta1);
             cliente1.addAccount(cuenta2);
             Transaction t1 = new Transaction(TransactionType.CREDIT, LocalDate.now(),
@@ -56,8 +56,8 @@ public class HomebankingApplication {
             transactionRepository.save(t4);
 
             Client cliente2 = new Client("Juan", "Garcia", "juancho@gmail.com", passwordEncoder.encode("pass456"));
-            Account cuenta3 = new Account("VIN-003", LocalDate.now(), 5000.0);
-            Account cuenta4 = new Account("VIN-004", LocalDate.now().plusDays(1l), 7500.0);
+            Account cuenta3 = new Account("VIN-003", LocalDate.now(), 5000.0, AccountType.AHORRO);
+            Account cuenta4 = new Account("VIN-004", LocalDate.now().plusDays(1l), 7500.0, AccountType.CORRIENTE);
             cliente2.addAccount(cuenta3);
             cliente2.addAccount(cuenta4);
             Transaction t5 = new Transaction(TransactionType.CREDIT, LocalDate.now(),
