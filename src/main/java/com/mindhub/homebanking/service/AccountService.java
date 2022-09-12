@@ -8,6 +8,7 @@ import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.models.Transaction;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.service.abstraction.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -29,11 +30,8 @@ public class AccountService implements IAccountService {
     private ClientRepository clientRepository;
 
     @Override
-    public List<AccountDTO> accountList(Authentication authentication) {
-        Client client = clientRepository.findByEmail(authentication.getName()).get();
-        return client.getAccounts().stream()
-                .filter(account -> account.getSoftDelete().equals(false))
-                .map(AccountDTO::new).collect(toList());
+    public List<AccountDTO> accountList() {
+        return accountRepository.findAll().stream().map(AccountDTO::new).collect(toList());
     }
 
     @Override
@@ -44,9 +42,7 @@ public class AccountService implements IAccountService {
     @Override
     public void createAccount(Authentication authentication) throws AccountLimitException {
         Client client = clientRepository.findByEmail(authentication.getName()).get();
-        if (client.getAccounts().stream().count() >= 3) {
-            throw new AccountLimitException();
-        }
+        validateAccountLimit(client);
         Account account = new Account(createNumber(), LocalDate.now(), 0.0);
         client.addAccount(account);
         accountRepository.save(account);
@@ -55,7 +51,9 @@ public class AccountService implements IAccountService {
     @Override
     public List<AccountDTO> getAccounts(Authentication authentication) {
         Client client = clientRepository.findByEmail(authentication.getName()).get();
-        return client.getAccounts().stream().map(AccountDTO::new).collect(toList());
+        return client.getAccounts().stream()
+                .filter(account -> account.getSoftDelete().equals(false))
+                .map(AccountDTO::new).collect(toList());
     }
 
     @Override
@@ -95,6 +93,12 @@ public class AccountService implements IAccountService {
     private void validateAccountExist(Optional account) throws InvalidParameterException {
         if (account.isEmpty()) {
             throw new InvalidParameterException("There's no Account with that number.");
+        }
+    }
+
+    private void validateAccountLimit(Client client) throws AccountLimitException {
+        if (client.getAccounts().stream().filter(account -> account.getSoftDelete().equals(false)).count() >= 3) {
+            throw new AccountLimitException();
         }
     }
 

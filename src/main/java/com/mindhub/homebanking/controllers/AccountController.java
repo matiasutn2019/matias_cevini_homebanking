@@ -1,6 +1,7 @@
 package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.DTO.AccountDTO;
+import com.mindhub.homebanking.exceptions.AccountLimitException;
 import com.mindhub.homebanking.exceptions.InvalidParameterException;
 import com.mindhub.homebanking.service.abstraction.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class AccountController {
     private IAccountService accountService;
 
     @GetMapping(value = "/accounts")
-    public ResponseEntity<List<AccountDTO>> accountDTOList(Authentication authentication) {
+    public ResponseEntity<List<AccountDTO>> accountDTOList() {
         return new ResponseEntity<>(accountService.accountList(), OK);
     }
 
@@ -30,13 +31,13 @@ public class AccountController {
     }
 
     @PostMapping(value = "/clients/current/accounts")
-    public ResponseEntity<?> createAccount(Authentication authentication) {
+    public ResponseEntity<?> createAccount(Authentication authentication) throws AccountLimitException {
             accountService.createAccount(authentication);
             return new ResponseEntity<>(CREATED);
     }
 
     @GetMapping(value = "/clients/current/accounts")
-    public ResponseEntity<List<AccountDTO>> clientAccounts(Authentication authentication) {
+    public ResponseEntity<List<AccountDTO>> getAccounts(Authentication authentication) {
         return new ResponseEntity<>(accountService.getAccounts(authentication), OK);
     }
 

@@ -8,8 +8,7 @@ import org.springframework.security.core.Authentication;
 import java.util.List;
 
 public interface IAccountService {
-
-    List<AccountDTO> accountList(Authentication authentication);
+    List<AccountDTO> accountList();
     AccountDTO getById(Long id);
     void createAccount(Authentication authentication) throws AccountLimitException;
 
