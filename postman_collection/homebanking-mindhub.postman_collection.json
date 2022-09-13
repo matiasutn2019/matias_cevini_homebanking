@@ -356,6 +356,36 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "make payment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"number\": \"0000 1111 2222 3333\",\r\n    \"cvv\": \"123\",\r\n    \"amount\": 2000.0,\r\n    \"description\": \"débito a la cuenta corriente\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/clients/current/payments",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"clients",
+						"current",
+						"payments"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
