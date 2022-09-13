@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apply for a Loan</title>
+    <title>Payments</title>
     <link rel="shortcut icon" href="./assets/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="./css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -38,7 +38,7 @@
                             <a class="nav-link" href="./transfers.html">Transfers</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./payments.html">Payments</a>
+                            <a class="nav-link" href="#">Payments</a>
                         </li>
                         <li>
                             <button type="button" class="btn btn-danger" @click="signout()">Sign Out</button>
@@ -50,51 +50,32 @@
     </div>
 
     <header class="mt-5">
-        <h1 class="text-center txt-shadow">Apply for a Loan</h1>
+        <h1 class="heading-section text-center txt-shadow">Make your payment</h1>
     </header>
 
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
             <form class="mb-5">
-                <h4 class="txt-shadow mt-3">
-                    Choose the Loan
-                </h4>
-                <select class="form-select mb-3" aria-label="Default select example" v-model="loanSelected">
-                    <template v-for="loan in loans">
-                        <option>{{loan.name}}</option>
-                    </template>
-                </select>
-                <label class="p-2 mb-2 txt-shadow-2">Maximum loan amount: {{maxAmount[0]}}</label>
 
-                <h4 class="txt-shadow">Loan amount</h4>
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" id="amount" aria-describedby="basic-addon3"
-                        v-model="amountSelected">
+                <div class="mb-3">
+                    <label for="txt1" class="form-label txt-shadow-2">Card number</label><br>
+                    <input type="text" id="txt1" v-model="number">
+                </div>
+                <div class="mb-3">
+                    <label for="txt2" class="form-label txt-shadow-2">CVV</label><br>
+                    <input type="text" id="txt2" v-model="cvv">
+                </div>
+                <div class="mb-3">
+                    <label for="txt3" class="form-label txt-shadow-2">Amount</label><br>
+                    <input type="text" id="txt3" v-model="amount">
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label txt-shadow-2">Description</label><br>
+                    <textarea class="form-control" id="description" aria-label="With textarea"
+                        v-model="description"></textarea>
                 </div>
 
-                <h4 class="txt-shadow">
-                    Choose the payments
-                </h4>
-                <select class="form-select mb-3" aria-label="Default select example" v-model="paymentSelected">
-                    <template v-for="payment in payments[0]">
-                        <option>{{payment}}</option>
-                    </template>
-                </select>
-
-                <label class="p-2 mb-2 txt-shadow-2">Payment amount: {{paymentAmount}}</label>
-                {{validateAmount}}
-                {{filterLoans}}
-
-                <div>
-                    <h4 class="txt-shadow">Choose destination account</h4>
-                    <select class="form-select mb-3" aria-label="Default select example" v-model="accountDestination">
-                        <template v-for="account in accounts">
-                            <option>{{account.number}}</option>
-                        </template>
-                    </select>
-                </div>
-
-                <button type="submit" class="btn btn-secondary" @click.prevent="apply()">Apply</button>
+                <button type="submit" class="btn btn-secondary" @click.prevent="pay()">Pay</button>
             </form>
         </div>
     </div>
@@ -104,7 +85,7 @@
         </script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/vue@3"></script>
-    <script src="./js/loan-application.js"></script>
+    <script src="./js/payments.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>
 
