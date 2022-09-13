@@ -23,7 +23,7 @@ createApp({
 
         loadData(id) {
             axios
-                .get('http://localhost:8080/api/accounts/' + id)
+                .get('/api/accounts/' + id)
                 .then(res => {
                     this.response = res
                     this.account = this.response.data
