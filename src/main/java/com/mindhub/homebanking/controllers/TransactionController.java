@@ -20,12 +20,12 @@ public class TransactionController {
     private ITransactionService transactionService;
 
     @PostMapping(value = "/transactions")
-    public ResponseEntity<?> transaction(@RequestParam Double amount, @RequestParam String description,
+    public ResponseEntity<?> makeTransaction(@RequestParam Double amount, @RequestParam String description,
                                          @RequestParam String accountOriginNumber,
                                          @RequestParam String accountDestinationNumber,
                                          Authentication authentication) throws InvalidParameterException {
-            transactionService.handleTransaction(amount, description, accountOriginNumber,
-                    accountDestinationNumber, authentication);
-            return new ResponseEntity<>(OK);
+        transactionService.handleTransaction(amount, description, accountOriginNumber,
+                accountDestinationNumber, authentication);
+        return new ResponseEntity<>(OK);
     }
 }

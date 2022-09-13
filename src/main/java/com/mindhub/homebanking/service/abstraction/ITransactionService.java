@@ -8,4 +8,5 @@ public interface ITransactionService {
     void handleTransaction(Double amount, String description,
                      String accountOriginNumber, String accountDestinationNumber,
                      Authentication authentication) throws InvalidParameterException;
+
 }
