@@ -50,7 +50,7 @@ public class LoanService implements ILoanService {
     }
 
     private ClientLoan createClientLoan(LoanApplicationDTO loanApplication, Client client, Loan loan, Account account) {
-        Double amountPlusTax = calculateTax(loanApplication.getAmount(), loanApplication.getPercentage());
+        Double amountPlusTax = calculateTax(loanApplication.getAmount(), loan.getPercentage());
         ClientLoan clientLoan = new ClientLoan(amountPlusTax, loanApplication.getPayments(), client, loan);
         //Se debe crear una solicitud de préstamo con el monto solicitado sumando el 20% del mismo
 
