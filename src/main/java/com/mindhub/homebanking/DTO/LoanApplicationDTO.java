@@ -5,7 +5,6 @@ public class LoanApplicationDTO {
     private Double amount;
     private Integer payments;
     private String accountNumber;
-    private Double percentage;
 
 
     public Long getId() {
@@ -24,7 +23,4 @@ public class LoanApplicationDTO {
         return accountNumber;
     }
 
-    public Double getPercentage() {
-        return percentage;
-    }
 }

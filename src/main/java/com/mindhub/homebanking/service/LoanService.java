@@ -70,7 +70,7 @@ public class LoanService implements ILoanService {
     }
 
     private double calculateTax(Double amount, Double percentage) {
-        return amount + (amount * percentage);
+        return amount + (amount / 100 * percentage);
     }
 
     private double getAccountBalance(Account account, Double amountTransaction) {

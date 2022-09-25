@@ -13,7 +13,7 @@ createApp({
             amountSelected: '',
             paymentAmount: '',
             loanId: '',
-            percentage: '',
+            percentage: 0
         }
     },
 
@@ -73,8 +73,7 @@ createApp({
                                         id: this.loanId[0],
                                         amount: this.amountSelected,
                                         payments: this.paymentSelected,
-                                        accountNumber: this.accountDestination,
-                                        percentage: this.percentage
+                                        accountNumber: this.accountDestination
                                     },
                                     {
                                         headers: { 'content-type': 'application/json' }
@@ -115,12 +114,13 @@ createApp({
             this.payments = this.loans
                 .filter(x => x.name == this.loanSelected)
                 .map(x => x.payments);
-            if (this.paymentSelected != '') {
-                this.paymentAmount = (parseInt(this.amountSelected) + ((parseInt(this.amountSelected) / 100 * parseInt(this.percentage))))
-                    / parseInt(this.paymentSelected)
-            } else {
-                this.paymentAmount = 0
-            }
+            //if (this.paymentSelected != '') {
+            this.paymentAmount = Math.round((parseInt(this.amountSelected) +
+                parseInt(this.amountSelected) / 100 * this.percentage)
+                / parseInt(this.paymentSelected))
+            //} else {
+            //    this.paymentAmount = 0
+            //}
             this.loanId = this.loans
                 .filter(x => x.name == this.loanSelected)
                 .map(x => x.id);
@@ -141,8 +141,8 @@ createApp({
 
         getPercentage() {
             this.percentage = this.loans.filter(loan => loan.name == this.loanSelected).map(loan => loan.percentage)[0]
-            console.log('percentage '+this.percentage)
-            console.log('payment '+this.paymentAmount)
+            console.log('percentage ' + this.percentage)
+            console.log('payment ' + this.paymentAmount)
         }
     }
 
