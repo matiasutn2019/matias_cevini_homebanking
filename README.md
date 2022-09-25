@@ -1,6 +1,6 @@
 # README
 
-## FULL STACK HOMEBANKING APPLICATION
+## FULL STACK RESTFul HOMEBANKING APPLICATION
 
 #### Technologies used to develop this project
 
@@ -8,7 +8,7 @@
 - HTML, CSS, Bootstrap, JavaScript, Vue.js, Axios
 
 #### Backend
-- Java 11, Gradle, Spring Boot, Spring MVC, Spring Data, Spring Security, Hibernate, PostgreSQL
+- Java 11, Gradle, Spring Boot, Spring Data, H2 Database, Spring Security, SWAGGER
 
 ***
 #### You can see the App deployed at:
