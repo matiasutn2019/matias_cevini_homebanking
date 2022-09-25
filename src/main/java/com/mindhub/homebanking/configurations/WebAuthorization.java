@@ -23,12 +23,26 @@ import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 @Configuration
 public class WebAuthorization extends WebSecurityConfigurerAdapter {
 
+    private static final String[] SWAGGER = {
+            "/swagger-resources/**",
+            "/swagger-ui/**",
+            "/v2/api-docs",
+            "/api/docs",
+            "/api/docs/**",
+            "/v3/api-docs/**",
+            "/api/docs/swagger-ui",
+            "/swagger-ui.html"
+    };
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 // turn off checking for CSRF tokens
-                .csrf().disable()
+                .csrf()
+                .disable()
                 .authorizeRequests()
+                .antMatchers(SWAGGER)
+                .permitAll()
                 // index page
                 .antMatchers("/web/index.html", "/web/js/index.js",
                         "/web/css/style.css", "/web/assets/**")

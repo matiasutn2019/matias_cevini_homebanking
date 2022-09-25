@@ -1,2 +1,6 @@
-package com.mindhub.homebanking.common;public class DocumentationMessages {
+package com.mindhub.homebanking.common;
+
+public final class DocumentationMessages {
+
+
 }

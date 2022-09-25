@@ -30,9 +30,12 @@ public class HomebankingApplication {
 									  ClientLoanRepository clientLoanRepository,
 									  CardRepository cardRepository) {
         return (args) -> {
-            Client cliente1 = new Client("Lorenzo", "Melba", "melba@gmail.com", passwordEncoder.encode("pass123"));
-            Account cuenta1 = new Account("VIN-001", LocalDate.now(), 5000.0, AccountType.AHORRO);
-            Account cuenta2 = new Account("VIN-002", LocalDate.now().plusDays(1l), 7500.0, AccountType.CORRIENTE);
+            Client cliente1 = new Client("Lorenzo", "Melba",
+                    "melba@gmail.com", passwordEncoder.encode("pass123"));
+            Account cuenta1 = new Account("VIN-001", LocalDate.now(),
+                    5000.0, AccountType.AHORRO);
+            Account cuenta2 = new Account("VIN-002", LocalDate.now().plusDays(1l),
+                    7500.0, AccountType.CORRIENTE);
             cliente1.addAccount(cuenta1);
             cliente1.addAccount(cuenta2);
             Transaction t1 = new Transaction(TransactionType.CREDIT, LocalDate.now(),
@@ -55,31 +58,6 @@ public class HomebankingApplication {
             transactionRepository.save(t3);
             transactionRepository.save(t4);
 
-            Client cliente2 = new Client("Juan", "Garcia", "juancho@gmail.com", passwordEncoder.encode("pass456"));
-            Account cuenta3 = new Account("VIN-003", LocalDate.now(), 5000.0, AccountType.AHORRO);
-            Account cuenta4 = new Account("VIN-004", LocalDate.now().plusDays(1l), 7500.0, AccountType.CORRIENTE);
-            cliente2.addAccount(cuenta3);
-            cliente2.addAccount(cuenta4);
-            Transaction t5 = new Transaction(TransactionType.CREDIT, LocalDate.now(),
-                    1000.0, "crédito de $ 1000 a la cuenta 3", 0.0);
-            Transaction t6 = new Transaction(TransactionType.DEBIT, LocalDate.now(),
-                    -500.0, "débito de $ 500 a la cuenta 3", 0.0);
-            Transaction t7 = new Transaction(TransactionType.CREDIT, LocalDate.now(),
-                    1000.0, "crédito de $ 1000 a la cuenta 4", 0.0);
-            Transaction t8 = new Transaction(TransactionType.DEBIT, LocalDate.now(),
-                    -500.0, "débito de $ 500 a la cuenta 4", 0.0);
-            cuenta3.addTransaction(t5);
-            cuenta3.addTransaction(t6);
-            cuenta4.addTransaction(t7);
-            cuenta4.addTransaction(t8);
-            clientRepository.save(cliente2);
-            accountRepository.save(cuenta3);
-            accountRepository.save(cuenta4);
-            transactionRepository.save(t5);
-            transactionRepository.save(t6);
-            transactionRepository.save(t7);
-            transactionRepository.save(t8);
-
             Loan l1 = new Loan("HIPOTECARIO", 500000.0, 10.0, List.of(12,24,36,48,60));
             Loan l2 = new Loan("PERSONAL", 100000.0, 20.0, List.of(6,12,24));
             Loan l3 = new Loan("AUTOMOTRIZ", 300000.0, 30.0, List.of(6,12,24,36));
@@ -89,30 +67,24 @@ public class HomebankingApplication {
 
             ClientLoan clientLoan1 = new ClientLoan(400000.0, 60, cliente1, l1);
             ClientLoan clientLoan2 = new ClientLoan(50000.0, 12, cliente1, l2);
-            ClientLoan clientLoan3 = new ClientLoan(100000.0, 24, cliente2, l2);
-            ClientLoan clientLoan4 = new ClientLoan(200000.0, 36, cliente2, l3);
             clientLoanRepository.save(clientLoan1);
             clientLoanRepository.save(clientLoan2);
-            clientLoanRepository.save(clientLoan3);
-            clientLoanRepository.save(clientLoan4);
 
             String cardHolder1 = cliente1.getFirstName() + cliente1.getLastName();
-            String cardHolder2 = cliente2.getFirstName() + cliente2.getLastName();
-            Card card1 = new Card(CardType.DEBIT, "0000 1111 2222 3333", "123", LocalDate.now(), LocalDate.now().plusYears(5),
+            Card card1 = new Card(CardType.DEBIT, "0000 1111 2222 3333", "123",
+                    LocalDate.now(), LocalDate.now().plusYears(5),
                     cardHolder1,CardColor.GOLD);
-            Card card2 = new Card(CardType.CREDIT, "4444 5555 6666 7777", "456", LocalDate.now(), LocalDate.now().plusYears(5),
+            Card card2 = new Card(CardType.CREDIT, "4444 5555 6666 7777", "456",
+                    LocalDate.now(), LocalDate.now().plusYears(5),
                     cardHolder1, CardColor.PLATINUM);
-            Card card3 = new Card(CardType.CREDIT, "8888 9999 0000 1111", "789", LocalDate.now(), LocalDate.now().plusYears(5),
-                    cardHolder2, CardColor.SILVER);
-            Card card5 = new Card(CardType.CREDIT, "0000 1111 5555 4444", "730", LocalDate.now(), LocalDate.now().plusYears(5),
+            Card card5 = new Card(CardType.CREDIT, "0000 1111 5555 4444", "730",
+                    LocalDate.now(), LocalDate.now().plusYears(5),
                     cardHolder1, CardColor.SILVER);
             cliente1.addCard(card1);
             cliente1.addCard(card2);
             cliente1.addCard(card5);
-            cliente2.addCard(card3);
             cardRepository.save(card1);
             cardRepository.save(card2);
-            cardRepository.save(card3);
             cardRepository.save(card5);
 
             Client admin = new Client("Admin", "Rodriguez",
