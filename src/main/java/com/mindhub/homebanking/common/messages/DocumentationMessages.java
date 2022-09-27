@@ -1,4 +1,4 @@
-package com.mindhub.homebanking.common;
+package com.mindhub.homebanking.common.messages;
 
 public final class DocumentationMessages {
 

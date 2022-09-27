@@ -1,7 +1,7 @@
 package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.DTO.ClientDTO;
-import com.mindhub.homebanking.common.DocumentationMessages;
+import com.mindhub.homebanking.common.messages.DocumentationMessages;
 import com.mindhub.homebanking.exceptions.EmailAlreadyExistException;
 import com.mindhub.homebanking.exceptions.InvalidCredentialsException;
 import com.mindhub.homebanking.service.abstraction.IClientService;

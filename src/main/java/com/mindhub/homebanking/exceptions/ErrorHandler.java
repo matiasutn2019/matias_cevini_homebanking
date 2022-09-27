@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 
 @ControllerAdvice
@@ -52,6 +53,12 @@ public class ErrorHandler {
                                                              InvalidParameterException e) {
         return ResponseEntity.badRequest()
                 .body(buildResponse(e, FORBIDDEN));
+    }
+
+    @ExceptionHandler(SendEmailException.class)
+    public ResponseEntity<?> handleSendEmailException(HttpServletRequest request, SendEmailException e) {
+        return ResponseEntity.badRequest()
+                .body(buildResponse(e, BAD_REQUEST));
     }
 
     private ErrorResponse buildResponse(Exception e, HttpStatus httpStatus) {

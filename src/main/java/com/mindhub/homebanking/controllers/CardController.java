@@ -1,7 +1,7 @@
 package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.DTO.CardDTO;
-import com.mindhub.homebanking.common.DocumentationMessages;
+import com.mindhub.homebanking.common.messages.DocumentationMessages;
 import com.mindhub.homebanking.exceptions.CardColorException;
 import com.mindhub.homebanking.exceptions.CardTypeException;
 import com.mindhub.homebanking.exceptions.InvalidParameterException;

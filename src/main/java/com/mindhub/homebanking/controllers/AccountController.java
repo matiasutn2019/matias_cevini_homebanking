@@ -1,7 +1,7 @@
 package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.DTO.AccountDTO;
-import com.mindhub.homebanking.common.DocumentationMessages;
+import com.mindhub.homebanking.common.messages.DocumentationMessages;
 import com.mindhub.homebanking.exceptions.AccountLimitException;
 import com.mindhub.homebanking.exceptions.InvalidParameterException;
 import com.mindhub.homebanking.models.AccountType;
