@@ -1,9 +1,11 @@
 package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.DTO.ClientDTO;
+import com.mindhub.homebanking.common.DocumentationMessages;
 import com.mindhub.homebanking.exceptions.EmailAlreadyExistException;
 import com.mindhub.homebanking.exceptions.InvalidCredentialsException;
 import com.mindhub.homebanking.service.abstraction.IClientService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -20,21 +22,41 @@ public class ClientController {
     @Autowired
     private IClientService clientService;
 
+    @ApiOperation(
+            value = DocumentationMessages.CLIENT_CONTROLLER_ADMIN_GET,
+            notes = DocumentationMessages.CLIENT_CONTROLLER_ADMIN_GET_DESCRIPTION,
+            response = ResponseEntity.class
+    )
     @GetMapping(value = "/admin/clients")
     public ResponseEntity<List<ClientDTO>> getClients() {
         return new ResponseEntity<>(clientService.getClients(), OK);
     }
 
+    @ApiOperation(
+            value = DocumentationMessages.CLIENT_CONTROLLER_ADMIN_ID,
+            notes = DocumentationMessages.CLIENT_CONTROLLER_ADMIN_ID_DESCRIPTION,
+            response = ResponseEntity.class
+    )
     @GetMapping(value = "/admin/clients/{id}")
     public ResponseEntity<ClientDTO> getClientById(@PathVariable(name = "id") Long id) {
         return new ResponseEntity<>(clientService.getClient(id), OK);
     }
 
+    @ApiOperation(
+            value = DocumentationMessages.CLIENT_CONTROLLER_DETAILS,
+            notes = DocumentationMessages.CLIENT_CONTROLLER_DETAILS_DESCRIPTION,
+            response = ResponseEntity.class
+    )
     @GetMapping(value = "/clients/current")
     public ResponseEntity<ClientDTO> getAuthenticatedUserDetails(Authentication authentication) {
         return new ResponseEntity<>(clientService.getAuthenticatedUserDetails(authentication), OK);
     }
 
+    @ApiOperation(
+            value = DocumentationMessages.CLIENT_CONTROLLER_CREATE,
+            notes = DocumentationMessages.CLIENT_CONTROLLER_CREATE_DESCRIPTION,
+            response = ResponseEntity.class
+    )
     @PostMapping(path = "/clients")
     public ResponseEntity<?> register(@RequestParam String firstName, @RequestParam String lastName,
                                   @RequestParam String email, @RequestParam String password)
@@ -43,6 +65,11 @@ public class ClientController {
             return new ResponseEntity<>(CREATED);
     }
 
+    @ApiOperation(
+            value = DocumentationMessages.CLIENT_CONTROLLER_ADMIN_DELETE,
+            notes = DocumentationMessages.CLIENT_CONTROLLER_ADMIN_DELETE_DESCRIPTION,
+            response = ResponseEntity.class
+    )
     @DeleteMapping(value = "/admin/clients/{id}")
     public ResponseEntity<?> deleteClient(@PathVariable(name = "id") Long id) {
         clientService.delete(id);

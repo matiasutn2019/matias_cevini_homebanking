@@ -14,9 +14,13 @@
 #### You can see the App deployed at:
 https://homebanking-matias.herokuapp.com/web/index.html
 
+Client:
 - username: melba@gmail.com
-
 - password: pass123
+
+Admin:
+- username: admin@gmail.com
+- password: admin123
 ***
 
 #### SWAGGER:

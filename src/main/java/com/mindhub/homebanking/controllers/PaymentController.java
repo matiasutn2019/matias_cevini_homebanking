@@ -1,8 +1,10 @@
 package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.DTO.PaymentDTO;
+import com.mindhub.homebanking.common.DocumentationMessages;
 import com.mindhub.homebanking.exceptions.InvalidParameterException;
 import com.mindhub.homebanking.service.abstraction.IPaymentService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +21,11 @@ public class PaymentController {
     @Autowired
     private IPaymentService paymentService;
 
+    @ApiOperation(
+            value = DocumentationMessages.PAYMENT_CONTROLLER_CREATE,
+            notes = DocumentationMessages.PAYMENT_CONTROLLER_CREATE_DESCRIPTION,
+            response = ResponseEntity.class
+    )
     @PostMapping(value = "/payments")
     public ResponseEntity<?> payment(@RequestBody PaymentDTO payment)
             throws InvalidParameterException {

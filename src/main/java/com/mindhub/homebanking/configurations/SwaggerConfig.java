@@ -15,7 +15,7 @@ public class SwaggerConfig {
 
     private static final String BASE_PACKAGE = "com.mindhub.homebanking.controllers";
     private static final String TITLE = "MINDHUB BROTHERS";
-    private static final String DESCRIPTION = "MINDHUB BROTHERS Homebanking Application";
+    private static final String DESCRIPTION = "MindHub Brothers Home banking Application";
     private static final String VERSION = "1.0";
     private static final String CONTACT = "matiascevini@gmail.com";
     private static final String LICENSE = "Public";
