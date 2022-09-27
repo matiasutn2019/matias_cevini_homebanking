@@ -23,7 +23,8 @@ public class CardController {
 
     @PostMapping(value = "/clients/current/cards")
     public ResponseEntity<?> createCard(@RequestParam String cardType, @RequestParam String cardColor,
-                                             Authentication authentication) throws CardTypeException, CardColorException {
+                                             Authentication authentication)
+            throws CardTypeException, CardColorException {
             cardService.createCard(cardType, cardColor, authentication);
             return new ResponseEntity<>(CREATED);
     }
@@ -34,7 +35,8 @@ public class CardController {
     }
 
     @PatchMapping(value = "/clients/current/cards")
-    public ResponseEntity<?> deleteCard(@RequestParam String number, Authentication authentication) throws InvalidParameterException {
+    public ResponseEntity<?> deleteCard(@RequestParam String number, Authentication authentication)
+            throws InvalidParameterException {
         cardService.deleteCard(number, authentication);
         return new ResponseEntity<>(NO_CONTENT);
     }

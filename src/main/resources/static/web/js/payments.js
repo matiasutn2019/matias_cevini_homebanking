@@ -3,41 +3,33 @@ const { createApp } = Vue
 createApp({
     data() {
         return {
-            response: [],
             number: '',
+            holder: '',
             cvv: '',
             amount: '',
+            accountDestination: '',
             description: '',
         }
     },
 
     created() {
-        this.loadData();
+        
     },
 
     methods: {
-        loadData() {
-            axios
-                .get('/api/clients/current')
-                .then(res => {
-                    this.response = res;
-                })
-                .catch(error => {
-                    swal('Code: ' + error.response.status, error.response.data, "error");
-                })
-
-        },
-
         pay() {
-            if (this.number == '' || this.cvv == '' || this.amount == '' || this.description == '') {
+            if (this.number == '' || this.holder == '' || this.cvv == ''
+            || this.amount == '' || this.description == '' || this.accountDestination == '') {
                 swal('', 'Type the corresponding values', "warning");
             } else {
                 axios
-                    .post('/api/clients/current/payments',
+                    .post('/api/payments',
                         {
-                            number: this.number,
-                            cvv: this.cvv,
-                            amount: this.amount,
+                            cardNumber: this.number,
+                            cardHolder: this.holder,
+                            cardCvv: this.cvv,
+                            amountPayment: this.amount,
+                            accountDestination: this.accountDestination,
                             description: this.description
                         },
                         {
@@ -55,17 +47,6 @@ createApp({
                     })
             }
 
-        },
-
-        signout() {
-            axios
-                .post('/api/logout')
-                .then(res => {
-                    console.log('signed out!!!')
-                    window.location.href = "/web/index.html"
-                })
-
-        },
-
+        }
     }
 }).mount('#app')

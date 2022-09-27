@@ -2,31 +2,45 @@ package com.mindhub.homebanking.DTO;
 
 public class PaymentDTO {
 
-    private String number;
-    private String cvv;
-    private Double amount;
+    private String cardNumber;
+    private String cardHolder;
+    private String cardCvv;
+    private Double amountPayment;
+    private String accountDestination;
     private String description;
 
     public PaymentDTO() {
     }
 
-    public PaymentDTO(String number, String cvv, Double amount, String description) {
-        this.number = number;
-        this.cvv = cvv;
-        this.amount = amount;
+    public PaymentDTO(String cardNumber, String cardHolder,
+                      String cardCvv, Double amountPayment,
+                      String accountDestination, String description) {
+        this.cardNumber = cardNumber;
+        this.cardHolder = cardHolder;
+        this.cardCvv = cardCvv;
+        this.amountPayment = amountPayment;
+        this.accountDestination = accountDestination;
         this.description = description;
     }
 
-    public String getNumber() {
-        return number;
+    public String getCardNumber() {
+        return cardNumber;
     }
 
-    public String getCvv() {
-        return cvv;
+    public String getCardHolder() {
+        return cardHolder;
     }
 
-    public Double getAmount() {
-        return amount;
+    public String getCardCvv() {
+        return cardCvv;
+    }
+
+    public Double getAmountPayment() {
+        return amountPayment;
+    }
+
+    public String getAccountDestination() {
+        return accountDestination;
     }
 
     public String getDescription() {

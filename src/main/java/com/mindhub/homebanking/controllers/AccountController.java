@@ -21,8 +21,8 @@ public class AccountController {
     @Autowired
     private IAccountService accountService;
 
-    @GetMapping(value = "/accounts")
-    public ResponseEntity<List<AccountDTO>> accountDTOList() {
+    @GetMapping(value = "/admin/accounts")
+    public ResponseEntity<List<AccountDTO>> accountList() {
         return new ResponseEntity<>(accountService.accountList(), OK);
     }
 
@@ -32,7 +32,8 @@ public class AccountController {
     }
 
     @PostMapping(value = "/clients/current/accounts")
-    public ResponseEntity<?> createAccount(Authentication authentication, AccountType accountType) throws AccountLimitException {
+    public ResponseEntity<?> createAccount(Authentication authentication, AccountType accountType)
+            throws AccountLimitException {
             accountService.createAccount(authentication, accountType);
             return new ResponseEntity<>(CREATED);
     }
@@ -48,7 +49,8 @@ public class AccountController {
     }
 
     @PatchMapping(value = "/clients/current/accounts")
-    public ResponseEntity<?> deleteAccount(@RequestParam String number, Authentication authentication) throws InvalidParameterException {
+    public ResponseEntity<?> deleteAccount(@RequestParam String number, Authentication authentication)
+            throws InvalidParameterException {
         accountService.deleteAccount(number, authentication);
         return new ResponseEntity<>(NO_CONTENT);
     }

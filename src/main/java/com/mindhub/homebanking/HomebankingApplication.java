@@ -70,16 +70,16 @@ public class HomebankingApplication {
             clientLoanRepository.save(clientLoan1);
             clientLoanRepository.save(clientLoan2);
 
-            String cardHolder1 = cliente1.getFirstName() + cliente1.getLastName();
+            String cardHolder = cliente1.getFirstName() + " " + cliente1.getLastName();
             Card card1 = new Card(CardType.DEBIT, "0000 1111 2222 3333", "123",
                     LocalDate.now(), LocalDate.now().plusYears(5),
-                    cardHolder1,CardColor.GOLD);
+                    cardHolder,CardColor.GOLD);
             Card card2 = new Card(CardType.CREDIT, "4444 5555 6666 7777", "456",
                     LocalDate.now(), LocalDate.now().plusYears(5),
-                    cardHolder1, CardColor.PLATINUM);
+                    cardHolder, CardColor.PLATINUM);
             Card card5 = new Card(CardType.CREDIT, "0000 1111 5555 4444", "730",
                     LocalDate.now(), LocalDate.now().plusYears(5),
-                    cardHolder1, CardColor.SILVER);
+                    cardHolder, CardColor.SILVER);
             cliente1.addCard(card1);
             cliente1.addCard(card2);
             cliente1.addCard(card5);

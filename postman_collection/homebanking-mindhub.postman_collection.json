@@ -216,7 +216,7 @@
 			"response": []
 		},
 		{
-			"name": "crear cliente",
+			"name": "crear nuevo cliente - john doe",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -358,13 +358,13 @@
 			"response": []
 		},
 		{
-			"name": "make payment",
+			"name": "hacer payment no logueado",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"number\": \"0000 1111 2222 3333\",\r\n    \"cvv\": \"123\",\r\n    \"amount\": 2000.0,\r\n    \"description\": \"débito a la cuenta corriente\"\r\n}",
+					"raw": "{\r\n    \"cardNumber\": \"0000 1111 2222 3333\",\r\n    \"cardHolder\": \"Lorenzo Melba\",\r\n    \"cardCvv\": \"123\",\r\n    \"amountPayment\": 2000.0,\r\n    \"accountDestination\": \"VIN-002\",\r\n    \"description\": \"pago a la cuenta VIN-002 con tarjeta de débito\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -372,7 +372,49 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/api/clients/current/payments",
+					"raw": "localhost:8080/api/payments",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"payments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get transactions by date",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "accountNumber",
+							"value": "VIN-001",
+							"type": "text"
+						},
+						{
+							"key": "fromDate",
+							"value": "2019-09-13",
+							"type": "text"
+						},
+						{
+							"key": "thruDate",
+							"value": "2022-12-13",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8080/api/clients/current/transactions",
 					"host": [
 						"localhost"
 					],
@@ -381,7 +423,41 @@
 						"api",
 						"clients",
 						"current",
-						"payments"
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logear cliente nuevo - john doe",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "doe@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8080/api/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"login"
 					]
 				}
 			},

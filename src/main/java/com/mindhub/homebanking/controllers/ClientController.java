@@ -20,13 +20,13 @@ public class ClientController {
     @Autowired
     private IClientService clientService;
 
-    @GetMapping(value = "/clients")
-    public ResponseEntity<List<ClientDTO>> getClientsDTO() {
+    @GetMapping(value = "/admin/clients")
+    public ResponseEntity<List<ClientDTO>> getClients() {
         return new ResponseEntity<>(clientService.getClients(), OK);
     }
 
-    @GetMapping(value = "/clients/{id}")
-    public ResponseEntity<ClientDTO> getClientDTO(@PathVariable(name = "id") Long id) {
+    @GetMapping(value = "/admin/clients/{id}")
+    public ResponseEntity<ClientDTO> getClientById(@PathVariable(name = "id") Long id) {
         return new ResponseEntity<>(clientService.getClient(id), OK);
     }
 
@@ -43,7 +43,7 @@ public class ClientController {
             return new ResponseEntity<>(CREATED);
     }
 
-    @DeleteMapping(value = "/clients/{id}")
+    @DeleteMapping(value = "/admin/clients/{id}")
     public ResponseEntity<?> deleteClient(@PathVariable(name = "id") Long id) {
         clientService.delete(id);
         return new ResponseEntity<>(id, NO_CONTENT);
