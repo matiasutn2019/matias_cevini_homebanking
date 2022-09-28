@@ -17,7 +17,7 @@ public class SwaggerConfig {
     private static final String TITLE = "MINDHUB BROTHERS";
     private static final String DESCRIPTION = "MindHub Brothers Home banking Application";
     private static final String VERSION = "1.0";
-    private static final String CONTACT = "matiascevini@gmail.com";
+    private static final String CONTACT = "";
     private static final String LICENSE = "Public";
 
     @Bean

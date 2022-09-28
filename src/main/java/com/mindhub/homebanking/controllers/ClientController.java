@@ -4,6 +4,7 @@ import com.mindhub.homebanking.DTO.ClientDTO;
 import com.mindhub.homebanking.common.messages.DocumentationMessages;
 import com.mindhub.homebanking.exceptions.EmailAlreadyExistException;
 import com.mindhub.homebanking.exceptions.InvalidCredentialsException;
+import com.mindhub.homebanking.exceptions.SendEmailException;
 import com.mindhub.homebanking.service.abstraction.IClientService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +61,7 @@ public class ClientController {
     @PostMapping(path = "/clients")
     public ResponseEntity<?> register(@RequestParam String firstName, @RequestParam String lastName,
                                   @RequestParam String email, @RequestParam String password)
-            throws EmailAlreadyExistException, InvalidCredentialsException {
+            throws EmailAlreadyExistException, InvalidCredentialsException, SendEmailException {
             clientService.register(firstName, lastName, email, password);
             return new ResponseEntity<>(CREATED);
     }

@@ -3,27 +3,15 @@ package com.mindhub.homebanking.common.mail.template;
 import com.mindhub.homebanking.common.mail.IContent;
 import com.mindhub.homebanking.common.mail.IEmail;
 
-import java.text.MessageFormat;
-
 public class RegisterTemplateEmail implements IEmail, IContent {
 
     private static final String TYPE = "text/plain";
     private static final String SUBJECT = "Register Successfully";
-    private static final String WELCOME_TEXT = "Welcome to {0}";
+    private static final String WELCOME_TEXT = "Welcome to MindHub Brothers";
     private String emailTo;
-    private String image;
-    private String organizationName;
-    private String address;
-    private Integer phone;
 
-    public RegisterTemplateEmail(String emailTo, String image,
-                                 String organizationName,
-                                 String address, Integer phone) {
+    public RegisterTemplateEmail(String emailTo) {
         this.emailTo = emailTo;
-        this.image = image;
-        this.organizationName = organizationName;
-        this.address = address;
-        this.phone = phone;
     }
 
     @Override
@@ -33,10 +21,7 @@ public class RegisterTemplateEmail implements IEmail, IContent {
 
     @Override
     public String getValue() {
-        return image
-                + "\n" + MessageFormat.format(WELCOME_TEXT, organizationName)
-                + "\n" + "Address: " + address
-                + "\n" + "Telephone: " + phone;
+        return WELCOME_TEXT;
     }
 
     @Override

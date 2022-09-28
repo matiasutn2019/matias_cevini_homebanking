@@ -10,6 +10,7 @@ import com.mindhub.homebanking.models.Transaction;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.service.abstraction.IAccountService;
+import com.mindhub.homebanking.utils.AccountUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -73,19 +74,10 @@ public class AccountService implements IAccountService {
         return AccountType.stream().map(type ->type.getAccountType()).collect(toList());
     }
 
-    private String getRandom(int size) {
-        StringBuilder num = new StringBuilder();
-        for (int i = 0; i < size; i++) {
-            int num2 = (int) (Math.random() * 10);
-            num.append(num2);
-        }
-        return num.toString();
-    }
-
     private String createNumber() {
         String number;
         do {
-            number = "VIN-" + getRandom(8);
+            number = "VIN-" + AccountUtils.getAccountNumber();
         } while (!accountRepository.findByNumber(number).isEmpty());
         return number;
     }

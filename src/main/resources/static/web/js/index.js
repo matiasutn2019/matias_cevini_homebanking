@@ -30,6 +30,7 @@ createApp({
                         }
                     })
                     .catch(error => {
+
                         if (error.response.data.exception === 'No value present') {
                             swal('Code: ' + error.response.status, 'Username not found', "error");
                             this.emailLogin = ''
@@ -40,7 +41,8 @@ createApp({
                         } else if (error.response.data.exception === 'Maximum sessions of 1 for this principal exceeded') {
                             swal('Code: ' + error.response.status, 'You are already logged in', "error");
                         }
-                        swal('Code: ' + error.response.status, error.response.data, "error");
+                        swal('Code: ' + error.response.data.code, error.response.data.message, "error");
+
                     })
             }
         },
@@ -60,7 +62,7 @@ createApp({
                         }
                     })
                     .catch(error => {
-                        swal('Code: ' + error.response.status, error.response.data, 'error');
+                        swal('Code: ' + error.response.data.code, error.response.data.message, 'error');
                     })
             }
         }
