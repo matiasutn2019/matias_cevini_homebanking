@@ -26,7 +26,7 @@ public class TransactionController {
             notes = DocumentationMessages.TRANSACTION_CONTROLLER_CREATE_DESCRIPTION,
             response = ResponseEntity.class
     )
-    @PostMapping(value = "/transactions")
+    @PostMapping(value = "clients/current/transactions")
     public ResponseEntity<?> makeTransaction(@RequestParam Double amount, @RequestParam String description,
                                          @RequestParam String accountOriginNumber,
                                          @RequestParam String accountDestinationNumber,

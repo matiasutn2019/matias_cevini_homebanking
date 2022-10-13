@@ -71,7 +71,7 @@ createApp({
                     .then((willTransfer) => {
                         if (willTransfer) {
                             axios
-                                .post('/api/transactions',
+                                .post('/api/clients/current/transactions',
                                     'amount=' + this.amount +
                                     '&description=' + this.description +
                                     '&accountOriginNumber=' + this.accountOrigin +

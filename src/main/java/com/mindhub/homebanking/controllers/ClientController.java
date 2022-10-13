@@ -35,16 +35,6 @@ public class ClientController {
     }
 
     @ApiOperation(
-            value = DocumentationMessages.CLIENT_CONTROLLER_ADMIN_ID,
-            notes = DocumentationMessages.CLIENT_CONTROLLER_ADMIN_ID_DESCRIPTION,
-            response = ResponseEntity.class
-    )
-    @GetMapping(value = "/admin/clients/{id}")
-    public ResponseEntity<ClientDTO> getClientById(@PathVariable(name = "id") Long id) {
-        return new ResponseEntity<>(clientService.getClient(id), OK);
-    }
-
-    @ApiOperation(
             value = DocumentationMessages.CLIENT_CONTROLLER_DETAILS,
             notes = DocumentationMessages.CLIENT_CONTROLLER_DETAILS_DESCRIPTION,
             response = ResponseEntity.class
@@ -72,9 +62,9 @@ public class ClientController {
             notes = DocumentationMessages.CLIENT_CONTROLLER_ADMIN_DELETE_DESCRIPTION,
             response = ResponseEntity.class
     )
-    @DeleteMapping(value = "/admin/clients/{id}")
-    public ResponseEntity<?> deleteClient(@PathVariable(name = "id") Long id) throws InvalidParameterException {
+    @DeleteMapping(value = "/admin/clients")
+    public ResponseEntity<?> deleteClient(@RequestParam Long id) throws InvalidParameterException {
         clientService.delete(id);
-        return new ResponseEntity<>(id, NO_CONTENT);
+        return new ResponseEntity<>(NO_CONTENT);
     }
 }

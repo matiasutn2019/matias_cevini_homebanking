@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.*;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
@@ -50,11 +50,14 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter {
                 // other sites
                 .antMatchers(POST, "/api/clients").permitAll()//register client
                 .antMatchers(POST, "/api/payments").permitAll()//external payments
-                .antMatchers("/rest/**", "/api/admin/**", "/h2-console/**").hasAuthority("ADMIN")
+                .antMatchers("/rest/**", "/h2-console/**").hasAuthority("ADMIN")
                 .antMatchers("/web/manager.html", "/web/js/manager.js").hasAuthority("ADMIN")
-                .antMatchers("/api/admin/**").hasAuthority("ADMIN")
+                .antMatchers(GET, "/api/admin/**").hasAuthority("ADMIN")
+                .antMatchers(DELETE, "/api/admin/clients").hasAuthority("ADMIN")
                 .antMatchers("/web/**").hasAuthority("CLIENT")
-                .antMatchers("/api/**").hasAuthority("CLIENT")
+                .antMatchers("/api/clients/**").hasAuthority("CLIENT")
+                .antMatchers(GET, "/api/loans").hasAuthority("CLIENT")
+                .antMatchers(POST, "/api/loans").hasAuthority("CLIENT")
                 .anyRequest()
                 .authenticated()
                 .and()

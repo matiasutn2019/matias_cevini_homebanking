@@ -88,6 +88,7 @@ public class ClientService implements IClientService {
             });
             client.getCards().stream().forEach(card -> card.setSoftDelete(true));
             client.getClientLoans().stream().forEach(clientLoan -> clientLoan.setSoftDelete(true));
+            clientRepository.save(client);
         } else {
             throw new InvalidParameterException("The ID doesn't correspond to a real or active client");
         }

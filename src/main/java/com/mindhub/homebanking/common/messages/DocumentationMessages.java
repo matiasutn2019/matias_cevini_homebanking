@@ -27,8 +27,6 @@ public final class DocumentationMessages {
     // Client Controller
     public static final String CLIENT_CONTROLLER_ADMIN_GET = "Lists all clients";
     public static final String CLIENT_CONTROLLER_ADMIN_GET_DESCRIPTION = "Lists all clients - Admin only";
-    public static final String CLIENT_CONTROLLER_ADMIN_ID = "Lists a client";
-    public static final String CLIENT_CONTROLLER_ADMIN_ID_DESCRIPTION = "Provide an ID to find the corresponding client - Admin only";
     public static final String CLIENT_CONTROLLER_DETAILS = "Clients details";
     public static final String CLIENT_CONTROLLER_DETAILS_DESCRIPTION = "Returns the authenticated client details of profile, accounts, cards, loans";
     public static final String CLIENT_CONTROLLER_CREATE = "Creates a client";

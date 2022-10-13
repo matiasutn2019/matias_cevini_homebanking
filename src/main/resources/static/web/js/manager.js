@@ -36,7 +36,7 @@ createApp({
                 alert('Ingrese los valores correspondientes');
             } else {
                 axios
-                    .post('/api/admin/clients', {
+                    .post('/api/clients', {
                         firstName: this.firstName,
                         lastName: this.lastName,
                         email: this.email,
@@ -46,9 +46,10 @@ createApp({
             }
         },
 
-        deleteClient(id) {
+        deleteClient(cli) {
+            id = cli.id;
             axios
-                .delete('/api/admin/clients/' + id)
+                .delete('/api/admin/clients', 'id=' + id)
                 .then(res => {
                     if (res.statusCode === 204) {
                         this.loadData()
@@ -57,6 +58,7 @@ createApp({
                     }
                 })
                 .catch(error => {
+                    console.log(error)
                     swal('Code: ' + error.response.data.code, error.response.data.message, 'error');
                 })
         },
