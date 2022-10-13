@@ -74,9 +74,6 @@ createApp({
                                         amount: this.amountSelected,
                                         payments: this.paymentSelected,
                                         accountNumber: this.accountDestination
-                                    },
-                                    {
-                                        headers: { 'content-type': 'application/json' }
                                     }
                                 )
                                 .then(res => {

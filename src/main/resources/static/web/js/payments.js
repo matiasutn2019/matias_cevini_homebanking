@@ -13,13 +13,13 @@ createApp({
     },
 
     created() {
-        
+
     },
 
     methods: {
         pay() {
             if (this.number == '' || this.holder == '' || this.cvv == ''
-            || this.amount == '' || this.description == '' || this.accountDestination == '') {
+                || this.amount == '' || this.description == '' || this.accountDestination == '') {
                 swal('', 'Type the corresponding values', "warning");
             } else {
                 axios
@@ -31,9 +31,6 @@ createApp({
                             amountPayment: this.amount,
                             accountDestination: this.accountDestination,
                             description: this.description
-                        },
-                        {
-                            headers: { 'content-type': 'application/json' }
                         }
                     )
                     .then(response => {

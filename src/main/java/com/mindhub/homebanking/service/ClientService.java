@@ -13,6 +13,8 @@ import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.service.abstraction.IClientService;
 import com.mindhub.homebanking.utils.AccountUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -36,7 +38,7 @@ public class ClientService implements IClientService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private EmailHelper emailHelper;
-
+    Logger logger = LoggerFactory.getLogger(ClientService.class);
     @Override
     public ClientDTO getClient(Long id) {
         return clientRepository.findById(id).map(ClientDTO::new)
@@ -62,7 +64,7 @@ public class ClientService implements IClientService {
         Client client = new Client(firstName, lastName, email, passwordEncoder.encode(password));
         clientRepository.save(client);
         newAccount(client);
-        sendEmail(email);
+        //sendEmail(email);
     }
 
     private void sendEmail(String email) throws SendEmailException {
@@ -95,10 +97,12 @@ public class ClientService implements IClientService {
     private void validate(String firstName, String lastName, String email, String password,
                           Optional<Client> clientInDDBB)
             throws EmailAlreadyExistException, InvalidCredentialsException {
-        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty()) {
+        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty()
+                || password.isEmpty() || password.length() < 8) {
             throw new InvalidCredentialsException();
         }
         if (clientInDDBB.isPresent()) {
+            logger.error("");
             throw new EmailAlreadyExistException();
         }
     }

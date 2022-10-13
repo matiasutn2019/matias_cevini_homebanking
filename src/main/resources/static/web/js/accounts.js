@@ -87,8 +87,7 @@ createApp({
 
         deleteAccount(number) {
             axios
-                .patch('/api/clients/current/accounts', 'number=' + number,
-                    { headers: { 'content-type': 'application/x-www-form-urlencoded' } })
+                .patch('/api/clients/current/accounts', 'number=' + number)
                 .then(res => {
                     if (res.status === 204) {
                         swal('', 'Account deleted!', "success")

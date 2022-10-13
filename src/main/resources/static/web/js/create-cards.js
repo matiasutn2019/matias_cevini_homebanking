@@ -46,8 +46,7 @@ createApp({
             } else {
                 axios
                     .post('/api/clients/current/cards',
-                        'cardType=' + this.cardType + '&cardColor=' + this.cardColor,
-                        { headers: { 'content-type': 'application/x-www-form-urlencoded' } })
+                        'cardType=' + this.cardType + '&cardColor=' + this.cardColor)
                     .then(res => {
                         if (res.status === 201) {
                             window.location.href = "/web/cards.html"

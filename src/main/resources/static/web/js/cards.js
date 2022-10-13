@@ -59,24 +59,23 @@ createApp({
         },
 
         deleteCard() {
-            
-                axios
-                    .patch('/api/clients/current/cards', 'number=' + this.cardNumber,
-                        { headers: { 'content-type': 'application/x-www-form-urlencoded' } })
-                    .then(res => {
-                        if (res.status === 204) {
-                            swal('', 'Card deleted!', "success")
-                                .then((ok) => {
-                                    if (ok) {
-                                        window.location.reload()
-                                    }
-                                })
-                        }
-                    })
-                    .catch(error => {
-                        swal('Code: ' + error.response.data.code, error.response.data.message, "error")
-                    })
-            
+
+            axios
+                .patch('/api/clients/current/cards', 'number=' + this.cardNumber)
+                .then(res => {
+                    if (res.status === 204) {
+                        swal('', 'Card deleted!', "success")
+                            .then((ok) => {
+                                if (ok) {
+                                    window.location.reload()
+                                }
+                            })
+                    }
+                })
+                .catch(error => {
+                    swal('Code: ' + error.response.data.code, error.response.data.message, "error")
+                })
+
         },
 
         deleteButton() {

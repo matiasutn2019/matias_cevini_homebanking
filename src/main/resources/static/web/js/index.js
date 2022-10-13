@@ -18,12 +18,11 @@ createApp({
 
     methods: {
         login() {
-            if (this.emailLogin == '' || this.passwordLogin == '') {
+            if (this.emailLogin == '' || this.passwordLogin == '' || this.passwordLogin.length < 6) {
                 swal('', 'Type the corresponding values', "warning",);
             } else {
                 axios
-                    .post('/api/login', 'email=' + this.emailLogin + '&password=' + this.passwordLogin,
-                        { headers: { 'content-type': 'application/x-www-form-urlencoded' } })
+                    .post('/api/login', 'email=' + this.emailLogin + '&password=' + this.passwordLogin)
                     .then(response => {
                         if (response.status === 200) {
                             window.location.href = "/web/accounts.html";
@@ -47,13 +46,13 @@ createApp({
             }
         },
         register() {
-            if (this.firstName == '' || this.lastName == '' || this.email == '' || this.password == '') {
+            if (this.firstName == '' || this.lastName == '' || this.email == ''
+                || this.password == '' || this.password.length < 6) {
                 swal('', 'Type the corresponding values', "warning");
             } else {
                 axios
                     .post('/api/clients', "firstName=" + this.firstName + "&lastName="
-                        + this.lastName + "&email=" + this.email + "&password=" + this.password,
-                        { headers: { 'content-type': 'application/x-www-form-urlencoded' } })
+                        + this.lastName + "&email=" + this.email + "&password=" + this.password)
                     .then(response => {
                         if (response.status === 201) {
                             this.emailLogin = this.email;

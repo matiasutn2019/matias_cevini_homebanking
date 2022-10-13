@@ -75,8 +75,7 @@ createApp({
                                     'amount=' + this.amount +
                                     '&description=' + this.description +
                                     '&accountOriginNumber=' + this.accountOrigin +
-                                    '&accountDestinationNumber=' + this.accountDestination,
-                                    { headers: { 'content-type': 'application/x-www-form-urlencoded' } })
+                                    '&accountDestinationNumber=' + this.accountDestination)
                                 .then(response => {
                                     if (response.status === 200) {
                                         swal('', 'Transfer done!', "success")
