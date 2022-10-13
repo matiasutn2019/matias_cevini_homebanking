@@ -4,6 +4,7 @@ import com.mindhub.homebanking.DTO.ClientDTO;
 import com.mindhub.homebanking.common.messages.DocumentationMessages;
 import com.mindhub.homebanking.exceptions.EmailAlreadyExistException;
 import com.mindhub.homebanking.exceptions.InvalidCredentialsException;
+import com.mindhub.homebanking.exceptions.InvalidParameterException;
 import com.mindhub.homebanking.exceptions.SendEmailException;
 import com.mindhub.homebanking.service.abstraction.IClientService;
 import io.swagger.annotations.ApiOperation;
@@ -72,7 +73,7 @@ public class ClientController {
             response = ResponseEntity.class
     )
     @DeleteMapping(value = "/admin/clients/{id}")
-    public ResponseEntity<?> deleteClient(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<?> deleteClient(@PathVariable(name = "id") Long id) throws InvalidParameterException {
         clientService.delete(id);
         return new ResponseEntity<>(id, NO_CONTENT);
     }

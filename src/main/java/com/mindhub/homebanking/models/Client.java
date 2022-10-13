@@ -19,6 +19,7 @@ public class Client {
     private String lastName;
     private String email;
     private String password;
+    private Boolean softDelete = false;
     @OneToMany(mappedBy="client", fetch= FetchType.EAGER)
     private Set<Account> accounts = new HashSet<>();
 
@@ -99,5 +100,13 @@ public class Client {
     public void addCard(Card card) {
         card.setClient(this);
         this.cards.add(card);
+    }
+
+    public Boolean getSoftDelete() {
+        return softDelete;
+    }
+
+    public void setSoftDelete(Boolean softDelete) {
+        this.softDelete = softDelete;
     }
 }

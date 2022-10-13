@@ -62,6 +62,12 @@
                         Don't have an account yet? Sign Up
                     </button>
                 </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" v-model="admin">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Are you an Admin?
+                    </label>
+                </div>
             </div>
         </div>
 
@@ -102,7 +108,7 @@
                                     aria-describedby="emailHelp" v-model="email" required>
                             </div>
                             <div class="mb-3">
-                                <input type="password" class="form-control" placeholder="Password 8 or more char"
+                                <input type="password" class="form-control" placeholder="Password 6 or more char"
                                     v-model="password" required>
                             </div>
                         </form>

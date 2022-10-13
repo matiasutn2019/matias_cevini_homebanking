@@ -16,6 +16,7 @@ public class CardDTO {
     private LocalDate thruDate;
     private String cardHolder;
     private CardColor color;
+    private Boolean softDelete;
 
     public CardDTO() {
     }
@@ -29,6 +30,7 @@ public class CardDTO {
         this.thruDate = card.getThruDate();
         this.cardHolder = card.getCardHolder();
         this.color = card.getColor();
+        this.softDelete = card.getSoftDelete();
     }
 
     public Long getId() {
@@ -61,5 +63,9 @@ public class CardDTO {
 
     public CardColor getColor() {
         return color;
+    }
+
+    public Boolean getSoftDelete() {
+        return softDelete;
     }
 }

@@ -6,7 +6,7 @@
     <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>HomeBanking</title>
+    <title>Admin board</title>
     <link rel="shortcut icon" href="./assets/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="./css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -48,7 +48,7 @@
 
                     <form class="signin-form mt-4">
                         <div class="mb-3">
-                            <label for="exampleInputName1" class="form-label txt-shadow">Name: </label>
+                            <label for="exampleInputName1" class="form-label txt-shadow">First Name: </label>
                             <input type="text" class="form-control" id="exampleInputName1" v-model="firstName" required>
                         </div>
                         <div class="mb-3">
@@ -61,6 +61,11 @@
                             <input type="email" class="form-control" id="exampleInputEmail1"
                                 aria-describedby="emailHelp" v-model="email" required>
                         </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword" class="form-label txt-shadow">Password: </label>
+                            <input type="password" class="form-control" id="exampleInputPassword" v-model="password"
+                                required>
+                        </div>
                         <button type="submit" class="btn btn-secondary" @click.prevent="addClient()">Add Client</button>
                     </form>
                 </div>
@@ -72,9 +77,10 @@
                     <thead>
                         <tr>
                             <th scope="col" class="col-1 txt-shadow-2">ID</th>
-                            <th scope="col" class="col-3 txt-shadow-2">First Name</th>
-                            <th scope="col" class="col-3 txt-shadow-2">Last Name</th>
-                            <th scope="col" class="col-3 txt-shadow-2">Email</th>
+                            <th scope="col" class="col-2 txt-shadow-2">First Name</th>
+                            <th scope="col" class="col-2 txt-shadow-2">Last Name</th>
+                            <th scope="col" class="col-4 txt-shadow-2">Email</th>
+                            <th scope="col" class="col-2 txt-shadow-2">Delete</th>
                         </tr>
                     </thead>
                     <tbody id="">
@@ -83,6 +89,7 @@
                             <td>{{client.firstName}}</td>
                             <td>{{client.lastName}}</td>
                             <td>{{client.email}}</td>
+                            <td>{{client.softDelete}}</td>
                             <td>
                                 <!-- Button trigger modal -->
                                 <i class="fas fa-edit fa-2x icon-green" data-bs-toggle="modal"
@@ -117,7 +124,7 @@
                         <div class="modal-body">
                             <form>
                                 <div class="mb-3">
-                                    <label for="exampleInputName2" class="form-label">Name: </label>
+                                    <label for="exampleInputName2" class="form-label">First Name: </label>
                                     <input type="text" class="form-control" id="exampleInputName2" v-model="nameModal">
                                 </div>
                                 <div class="mb-3">

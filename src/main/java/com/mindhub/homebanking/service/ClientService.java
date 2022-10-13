@@ -5,6 +5,7 @@ import com.mindhub.homebanking.common.mail.EmailHelper;
 import com.mindhub.homebanking.common.mail.template.RegisterTemplateEmail;
 import com.mindhub.homebanking.exceptions.EmailAlreadyExistException;
 import com.mindhub.homebanking.exceptions.InvalidCredentialsException;
+import com.mindhub.homebanking.exceptions.InvalidParameterException;
 import com.mindhub.homebanking.exceptions.SendEmailException;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.AccountType;
@@ -76,8 +77,20 @@ public class ClientService implements IClientService {
     }
 
     @Override
-    public void delete(Long id) {
-        clientRepository.deleteById(id);
+    public void delete(Long id) throws InvalidParameterException {
+        Client client = clientRepository.findById(id).orElse(null);
+        if (client != null) {
+            client.setSoftDelete(true);
+            client.getAccounts().stream().forEach(account ->
+            {
+                account.setSoftDelete(true);
+                account.getTransactions().stream().forEach(transaction -> transaction.setSoftDelete(true));
+            });
+            client.getCards().stream().forEach(card -> card.setSoftDelete(true));
+            client.getClientLoans().stream().forEach(clientLoan -> clientLoan.setSoftDelete(true));
+        } else {
+            throw new InvalidParameterException("The ID doesn't correspond to a real or active client");
+        }
     }
 
     private void newAccount(Client client) {
@@ -98,7 +111,7 @@ public class ClientService implements IClientService {
                           Optional<Client> clientInDDBB)
             throws EmailAlreadyExistException, InvalidCredentialsException {
         if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty()
-                || password.isEmpty() || password.length() < 8) {
+                || password.isEmpty() || password.length() < 6) {
             throw new InvalidCredentialsException();
         }
         if (clientInDDBB.isPresent()) {

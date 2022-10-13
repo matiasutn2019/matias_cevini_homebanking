@@ -12,6 +12,7 @@ public class ClientDTO {
     private String firstName;
     private String lastName;
     private String email;
+    private Boolean softDelete;
     private Set<AccountDTO> accountsDTO;
     private Set<ClientLoanDTO> loans;
     private Set<CardDTO> cards;
@@ -23,6 +24,7 @@ public class ClientDTO {
         this.firstName = client.getFirstName();
         this.lastName = client.getLastName();
         this.email = client.getEmail();
+        this.softDelete = client.getSoftDelete();
         this.accountsDTO = client.getAccounts().stream().map(AccountDTO::new).collect(toSet());
         this.loans = client.getClientLoans().stream().map(ClientLoanDTO::new).collect(toSet());
         this.cards = client.getCards().stream().map(CardDTO::new).collect(toSet());
@@ -54,5 +56,9 @@ public class ClientDTO {
 
     public Set<CardDTO> getCards() {
         return cards;
+    }
+
+    public Boolean getSoftDelete() {
+        return softDelete;
     }
 }

@@ -15,6 +15,7 @@ public class AccountDTO {
     private LocalDate creationTime;
     private Double balance;
     private AccountType accountType;
+    private Boolean softDelete;
     private Set<TransactionDTO> transactionsDTO;
 
     public AccountDTO() {
@@ -26,6 +27,7 @@ public class AccountDTO {
         this.creationTime = account.getCreationTime();
         this.balance = account.getBalance();
         this.accountType = account.getAccountType();
+        this.softDelete = account.getSoftDelete();
         this.transactionsDTO = account.getTransactions().stream().map(TransactionDTO::new).collect(toSet());
     }
 
@@ -51,5 +53,9 @@ public class AccountDTO {
 
     public Set<TransactionDTO> getTransactionsDTO() {
         return transactionsDTO;
+    }
+
+    public Boolean getSoftDelete() {
+        return softDelete;
     }
 }

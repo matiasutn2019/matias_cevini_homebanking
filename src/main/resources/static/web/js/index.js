@@ -8,7 +8,8 @@ createApp({
             email: '',
             password: '',
             emailLogin: '',
-            passwordLogin: ''
+            passwordLogin: '',
+            admin: ''
         }
     },
 
@@ -19,17 +20,21 @@ createApp({
     methods: {
         login() {
             if (this.emailLogin == '' || this.passwordLogin == '' || this.passwordLogin.length < 6) {
-                swal('', 'Type the corresponding values', "warning",);
+                swal('', 'Type the corresponding values', "warning");
             } else {
                 axios
                     .post('/api/login', 'email=' + this.emailLogin + '&password=' + this.passwordLogin)
                     .then(response => {
                         if (response.status === 200) {
-                            window.location.href = "/web/accounts.html";
+                            if (this.admin) {
+                                window.location.href = "/web/manager.html"
+                            } else {
+                                window.location.href = "/web/accounts.html";
+                            }
                         }
                     })
                     .catch(error => {
-
+                        console.log(error);
                         if (error.response.data.exception === 'No value present') {
                             swal('Code: ' + error.response.status, 'Username not found', "error");
                             this.emailLogin = ''

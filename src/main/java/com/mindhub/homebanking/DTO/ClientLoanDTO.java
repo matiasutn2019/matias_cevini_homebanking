@@ -9,6 +9,7 @@ public class ClientLoanDTO {
     private String name;
     private Double amount;
     private Integer payment;
+    private Boolean softDelete;
 
     public ClientLoanDTO() {}
 
@@ -18,6 +19,7 @@ public class ClientLoanDTO {
         this.name = clientLoan.getLoan().getName();
         this.amount = clientLoan.getAmount();
         this.payment = clientLoan.getPayments();
+        this.softDelete = clientLoan.getSoftDelete();
     }
 
     public Long getIdClientLoan() {
@@ -38,5 +40,9 @@ public class ClientLoanDTO {
 
     public Integer getPayment() {
         return payment;
+    }
+
+    public Boolean getSoftDelete() {
+        return softDelete;
     }
 }

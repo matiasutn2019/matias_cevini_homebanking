@@ -18,6 +18,7 @@ public class TransactionDTO {
     private String description;
 
     private Double accountBalance;
+    private Boolean softDelete;
 
     public TransactionDTO() {
     }
@@ -29,6 +30,7 @@ public class TransactionDTO {
         this.amount = transaction.getAmount();
         this.description = transaction.getDescription();
         this.accountBalance = transaction.getAccountBalance();
+        this.softDelete = transaction.getSoftDelete();
     }
 
     public Long getId() {
@@ -53,5 +55,9 @@ public class TransactionDTO {
 
     public Double getAccountBalance() {
         return accountBalance;
+    }
+
+    public Boolean getSoftDelete() {
+        return softDelete;
     }
 }

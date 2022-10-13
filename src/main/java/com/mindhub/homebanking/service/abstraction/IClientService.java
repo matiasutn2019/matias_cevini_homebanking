@@ -3,6 +3,7 @@ package com.mindhub.homebanking.service.abstraction;
 import com.mindhub.homebanking.DTO.ClientDTO;
 import com.mindhub.homebanking.exceptions.EmailAlreadyExistException;
 import com.mindhub.homebanking.exceptions.InvalidCredentialsException;
+import com.mindhub.homebanking.exceptions.InvalidParameterException;
 import com.mindhub.homebanking.exceptions.SendEmailException;
 import org.springframework.security.core.Authentication;
 
@@ -15,5 +16,5 @@ public interface IClientService {
     ClientDTO getAuthenticatedUserDetails(Authentication authentication);
     void register(String firstName, String lastName,
                   String email, String password) throws EmailAlreadyExistException, InvalidCredentialsException, SendEmailException;
-    void delete(Long id);
+    void delete(Long id) throws InvalidParameterException;
 }

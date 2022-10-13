@@ -11,7 +11,8 @@ createApp({
             nameModal: '',
             lastNameModal: '',
             emailModal: '',
-            url: ''
+            url: '',
+            password: '',
         }
     },
 
@@ -22,22 +23,24 @@ createApp({
     methods: {
         loadData() {
             axios
-                .get('/api/clients')
+                .get('/api/admin/clients')
                 .then(res => {
                     this.response = res
                     this.clients = this.response.data
+                    console.log(this.response)
                 })
         },
 
         addClient() {
-            if (this.firstName == '' || this.lastName == '' || this.email == '') {
+            if (this.firstName == '' || this.lastName == '' || this.email == '' || this.password == '') {
                 alert('Ingrese los valores correspondientes');
             } else {
                 axios
-                    .post('/api/clients', {
+                    .post('/api/admin/clients', {
                         firstName: this.firstName,
                         lastName: this.lastName,
-                        email: this.email
+                        email: this.email,
+                        password: this.password
                     })
                     .then(this.loadData())
             }
@@ -45,23 +48,22 @@ createApp({
 
         deleteClient(id) {
             axios
-                .delete('/api/clients/' + id)
-                .then(this.loadData())
+                .delete('/api/admin/clients/' + id)
+                .then(res => {
+                    if (res.statusCode === 204) {
+                        this.loadData()
+                    } else {
+                        console.log(res)
+                    }
+                })
+                .catch(error => {
+                    swal('Code: ' + error.response.data.code, error.response.data.message, 'error');
+                })
         },
 
         patch() {
             axios
                 .patch(this.url, {
-                    name: this.nameModal,
-                    lastName: this.lastNameModal,
-                    email: this.emailModal
-                })
-                .then(this.loadData())
-        },
-
-        put() {
-            axios
-                .put(this.url, {
                     name: this.nameModal,
                     lastName: this.lastNameModal,
                     email: this.emailModal
