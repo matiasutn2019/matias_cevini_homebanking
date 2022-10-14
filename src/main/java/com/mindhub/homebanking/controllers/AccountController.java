@@ -34,11 +34,11 @@ public class AccountController {
     }
 
     @ApiOperation(
-            value = DocumentationMessages.ACCOUNT_CONTROLLER_ADMIN_ID,
-            notes = DocumentationMessages.ACCOUNT_CONTROLLER_ADMIN_ID_DESCRIPTION,
+            value = DocumentationMessages.ACCOUNT_CONTROLLER_ID,
+            notes = DocumentationMessages.ACCOUNT_CONTROLLER_ID_DESCRIPTION,
             response = ResponseEntity.class
     )
-    @GetMapping(value = "/admin/accounts/{id}")
+    @GetMapping(value = "/clients/accounts/{id}")
     public ResponseEntity<AccountDTO> getById(@PathVariable Long id) {
         return new ResponseEntity<>(accountService.getById(id), OK);
     }

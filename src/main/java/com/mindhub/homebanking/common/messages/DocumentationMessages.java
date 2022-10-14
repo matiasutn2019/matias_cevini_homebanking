@@ -5,8 +5,8 @@ public final class DocumentationMessages {
     // Account Controller
     public static final String ACCOUNT_CONTROLLER_ADMIN_GET = "Lists all accounts";
     public static final String ACCOUNT_CONTROLLER_ADMIN_GET_DESCRIPTION = "Lists all accounts of all clients - Admin only";
-    public static final String ACCOUNT_CONTROLLER_ADMIN_ID = "Lists an account";
-    public static final String ACCOUNT_CONTROLLER_ADMIN_ID_DESCRIPTION = "Provide an ID to find the corresponding account - Admin only";
+    public static final String ACCOUNT_CONTROLLER_ID = "Lists an account";
+    public static final String ACCOUNT_CONTROLLER_ID_DESCRIPTION = "Provide an ID to find the corresponding account";
     public static final String ACCOUNT_CONTROLLER_CREATE = "Creates an account";
     public static final String ACCOUNT_CONTROLLER_CREATE_DESCRIPTION = "The client can create a new account";
     public static final String ACCOUNT_CONTROLLER_GET = "Lists all accounts";
